@@ -1,4 +1,6 @@
 // Boyer–Moore Voting Algorithm.
+//Here we cancle th e count if some other element comes then at the end if we see through it the majority element never gets cancelled and will present the end also 
+
 class Solution {
     public int majorityElement(int[] nums) {
         int count=0;
