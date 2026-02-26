@@ -13,3 +13,4 @@ class Solution {
         return totGas>=totCost?start:-1;
     }
 }
+// revisited on 26.02.2026
