@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Bebas+Neue&family=JetBrains+Mono&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --primary: #4f46e5;
+      --secondary: #9333ea;
+      --accent: #06b6d4;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --highlight-bg: #fef08a;
+      --code-bg: #f1f5f9;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      margin: 0;
+      padding: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header-title {
+      font-size: 2.8rem;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-family: 'Bebas Neue';
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      background: var(--card-bg);
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-block;
+      font-size: 0.8rem;
+    }
+
+    .btn:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .try-btn {
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 8px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+    }
+
+    .try-btn:hover {
+      background: var(--secondary);
+      transform: scale(1.05);
+    }
+
+    pre {
+      background: var(--code-bg);
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono';
+      font-size: 0.85rem;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+      color: #1e293b;
+    }
+
+    .top-nav {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .scroll-pane::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .scroll-pane::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--border);
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f5f9;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .quiz-opt {
+      width: 100%;
+      text-align: left;
+      padding: 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      margin: 5px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-weight: 600;
+    }
+
+    .quiz-opt:hover {
+      background: #eef2ff;
+      border-color: var(--primary);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="top-nav">
+      <a href="00_Index.html" class="btn">🏠 Home</a>
+      <a href="01_PreSession.html" class="btn">🔭 01</a>
+      <a href="02_Concept_Loops.html" class="btn">📖 02</a>
+      <a href="03_Activity.html" class="btn">⚡ 03</a>
+      <a href="04_FillBlanks.html" class="btn">✏️ 04</a>
+      <a href="05_Exploration.html" class="btn">🔍 05</a>
+      <a href="06_LeetCode.html" class="btn">🧩 06</a>
+      <a href="08_ClassQuiz.html" class="btn">🏆 08</a>
+      <a href="13_Revision_Recall.html" class="btn">🧠 13</a>
+      <a href="14_Code_Listing.html" class="btn">📄 14</a>
+    </div>
+
+    <h1 class="header-title">🧩 Step 06: Algorithmic Challenges</h1>
+    <div style="max-width:1000px; margin:0 auto;">
+      <div class="card">
+        <h3>LeetCode 412: FizzBuzz</h3>
+        <p>Classic loop logic with modulo.</p>
+        <pre>public class MainClass {
+  public static void main(String[] args) {
+    for(int i=1; i<=15; i++) {
+      if(i%3==0 && i%5==0) System.out.println("FizzBuzz");
+      else if(i%3==0) System.out.println("Fizz");
+      else if(i%5==0) System.out.println("Buzz");
+      else System.out.println(i);
+    }
+  }
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20for%28int%20i%3D1%3B%20i%3C%3D15%3B%20i%2B%2B%29%20%7B%0A%20%20%20%20%20%20if%28i%253%3D%3D0%20%26%26%20i%255%3D%3D0%29%20System.out.println%28%22FizzBuzz%22%29%3B%0A%20%20%20%20%20%20else%20if%28i%253%3D%3D0%29%20System.out.println%28%22Fizz%22%29%3B%0A%20%20%20%20%20%20else%20if%28i%255%3D%3D0%29%20System.out.println%28%22Buzz%22%29%3B%0A%20%20%20%20%20%20else%20System.out.println%28i%29%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D&mode=edit"
+          target="_blank" class="try-btn">🚀 Visualize Execution</a>
+      </div>
+      <div class="card">
+        <h3>LeetCode 7: Reverse Integer</h3>
+        <p>Using digit extraction to reverse a number.</p>
+        <pre>public class MainClass {
+  public static void main(String[] args) {
+    int n=123, rev=0;
+    while(n != 0) {
+      rev = rev * 10 + n % 10;
+      n /= 10;
+    }
+    System.out.println(rev);
+  }
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20int%20n%3D123%2C%20rev%3D0%3B%0A%20%20%20%20while%28n%20%21%3D%200%29%20%7B%0A%20%20%20%20%20%20rev%20%3D%20rev%20%2A%2010%20%2B%20n%20%25%2010%3B%0A%20%20%20%20%20%20n%20/%3D%2010%3B%0A%20%20%20%20%7D%0A%20%20%20%20System.out.println%28rev%29%3B%0A%20%20%7D%0A%7D&mode=edit"
+          target="_blank" class="try-btn">🚀 Visualize Execution</a>
+      </div>
+      <div class="card">
+        <h3>LeetCode 204: Count Primes</h3>
+        <p>Use the Sieve of Eratosthenes for massive speedup.</p>
+        <pre>public int countPrimes(int n) {
+  if (n <= 2) return 0;
+  boolean[] isP = new boolean[n];
+  Arrays.fill(isP, true);
+  for (int i = 2; i * i < n; i++) {
+    if (isP[i]) {
+      for (int j = i * i; j < n; j += i) isP[j] = false;
+    }
+  }
+  int count = 0;
+  for (int i = 2; i < n; i++) if (isP[i]) count++;
+  return count;
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=import%20java.util.Arrays%3B%0Apublic%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20int%20n%20%3D%2030%3B%0A%20%20%20%20boolean%5B%5D%20isP%20%3D%20new%20boolean%5Bn%5D%3B%0A%20%20%20%20Arrays.fill%2BisP%2C%20true%29%3B%0A%20%20%20%20for%20%28int%20i%20%3D%202%3B%20i%20%2A%20i%20%3C%20n%3B%20i%2B%2B%29%20%7B%0A%20%20%20%20%20%20if%20%28isP%5Bi%5D%29%20%7B%0A%20%20%20%20%20%20%20%20for%20%28int%20j%20%3D%20i%20%2A%20i%3B%20j%20%3C%20n%3B%20j%20%2B%3D%20i%29%20isP%5Bj%5D%20%3D%20false%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%20%20int%20count%20%3D%200%3B%0A%20%20%20%20for%20%28int%20i%20%3D%202%3B%20i%20%3C%20n%3B%20i%2B%2B%29%20if%28isP%5Bi%5D%29%20count%2B%2B%3B%0A%20%20%20%20System.out.println%28%22Primes%20below%2030%3A%20%22%20%2B%20count%29%3B%0A%20%20%7D%0A%7D"
+          target="_blank" class="try-btn">🚀 Visualize Sieve Logic</a>
+      </div>
+    </div>
+  </div>
+  <script></script>
+</body>
+
+</html>

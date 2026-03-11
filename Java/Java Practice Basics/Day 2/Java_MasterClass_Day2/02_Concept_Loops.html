@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Bebas+Neue&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --primary: #4f46e5;
+            --secondary: #9333ea;
+            --accent: #06b6d4;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --highlight-bg: #fef08a;
+            --code-bg: #f1f5f9;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            font-size: 2.8rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-family: 'Bebas Neue';
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            background: var(--card-bg);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-block;
+            font-size: 0.8rem;
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .try-btn {
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+        .try-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        pre {
+            background: var(--code-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono';
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            color: #1e293b;
+        }
+
+        .top-nav {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .scroll-pane::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scroll-pane::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #f1f5f9;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .quiz-opt {
+            width: 100%;
+            text-align: left;
+            padding: 12px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 600;
+        }
+
+        .quiz-opt:hover {
+            background: #eef2ff;
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="top-nav">
+            <a href="00_Index.html" class="btn">🏠 Home</a>
+            <a href="01_PreSession.html" class="btn">🔭 01</a>
+            <a href="02_Concept_Loops.html" class="btn">📖 02</a>
+            <a href="03_Activity.html" class="btn">⚡ 03</a>
+            <a href="04_FillBlanks.html" class="btn">✏️ 04</a>
+            <a href="05_Exploration.html" class="btn">🔍 05</a>
+            <a href="06_LeetCode.html" class="btn">🧩 06</a>
+            <a href="08_ClassQuiz.html" class="btn">🏆 08</a>
+            <a href="13_Revision_Recall.html" class="btn">🧠 13</a>
+            <a href="14_Code_Listing.html" class="btn">📄 14</a>
+        </div>
+
+        <h1 class="header-title">Step 02: Concept Masterclass</h1>
+        <div style="display:flex; gap:2rem;">
+            <div style="flex:1; max-height:80vh; overflow-y:auto;" class="scroll-pane">
+                <h2>📖 Theory</h2>
+                <div class="card" id="topic-0">
+                    <h3>1. The FOR Loop Mechanic</h3>
+                    <p style="font-size:1rem; color:var(--text-muted);">Ideal for fixed ranges. Structure:
+                        <code>for(init; condition; update)</code>. Highly efficient for traversal.
+                    </p>
+                    <h4 style="margin:0; text-align:center; color:var(--primary);">Visual: Loop Index Tracker</h4>
+                    <div style="display:flex; gap:10px; justify-content:center; margin:20px 0;">
+                        <div class="ix"
+                            style="width:30px; height:30px; border:2px solid #ddd; border-radius:4px; display:flex; align-items:center; justify-content:center; font-weight:bold;">
+                            1</div>
+                        <div class="ix"
+                            style="width:30px; height:30px; border:2px solid #ddd; border-radius:4px; display:flex; align-items:center; justify-content:center; font-weight:bold;">
+                            2</div>
+                        <div class="ix"
+                            style="width:30px; height:30px; border:2px solid #ddd; border-radius:4px; display:flex; align-items:center; justify-content:center; font-weight:bold;">
+                            3</div>
+                        <div class="ix"
+                            style="width:30px; height:30px; border:2px solid #ddd; border-radius:4px; display:flex; align-items:center; justify-content:center; font-weight:bold;">
+                            4</div>
+                        <div class="ix"
+                            style="width:30px; height:30px; border:2px solid #ddd; border-radius:4px; display:flex; align-items:center; justify-content:center; font-weight:bold;">
+                            5</div>
+                    </div>
+                    <div id="ixOut"
+                        style="text-align:center; margin-bottom:10px; color:var(--secondary); font-weight:bold;">
+                        Current: i = ?</div>
+                    <button id="ixBtn" class="try-btn" style="width:100%;">Next Iteration</button>
+                </div>
+                <div class="card" id="topic-1">
+                    <h3>2. Digit Extraction</h3>
+                    <p style="font-size:1rem; color:var(--text-muted);">Using <code>n % 10</code> to get the last digit
+                        and <code>n / 10</code> to delete it. Perfect for reversals.</p>
+                </div>
+                <div class="card" id="topic-2">
+                    <h3>3. While & Do-While</h3>
+                    <p style="font-size:1rem; color:var(--text-muted);">Handle unknown iteration counts. While checks
+                        first; Do-while runs at least once.</p>
+                </div>
+                <div class="card" id="topic-3">
+                    <h3>4. Pattern Logic</h3>
+                    <p style="font-size:1rem; color:var(--text-muted);">Nested loops where outer loops manage rows and
+                        inner loops manage columns/stars.</p>
+                </div>
+                <div class="card" id="topic-4">
+                    <h3>5. Why Square Root? (Prime Proof)</h3>
+                    <p style="font-size:1rem; color:var(--text-muted);">Factors always come in pairs. If
+                        <code>n = a * b</code>, then one factor MUST be &le; &radic;n.
+                    </p>
+                    <div style="background:var(--code-bg); padding:10px; border-radius:8px; margin-top:10px;">
+                        <table style="margin:0; background:none;">
+                            <tr style="border-bottom:2px solid var(--primary);">
+                                <th style="padding:4px;">a &times; b</th>
+                                <th style="padding:4px;">= 36</th>
+                                <th style="padding:4px;">Status</th>
+                            </tr>
+                            <tr class="f-pair" data-pair="1">
+                                <td>1 &times; 36</td>
+                                <td>36</td>
+                                <td>New</td>
+                            </tr>
+                            <tr class="f-pair" data-pair="2">
+                                <td>2 &times; 18</td>
+                                <td>36</td>
+                                <td>New</td>
+                            </tr>
+                            <tr class="f-pair" data-pair="3">
+                                <td>3 &times; 12</td>
+                                <td>36</td>
+                                <td>New</td>
+                            </tr>
+                            <tr class="f-pair" data-pair="4">
+                                <td>4 &times; 9</td>
+                                <td>36</td>
+                                <td>New</td>
+                            </tr>
+                            <tr style="background:var(--highlight-bg); font-weight:bold;">
+                                <td>6 &times; 6</td>
+                                <td>36</td>
+                                <td>&radic;36</td>
+                            </tr>
+                            <tr class="f-pair" data-pair="4" style="opacity:0.5;">
+                                <td>9 &times; 4</td>
+                                <td>36</td>
+                                <td>Repeat!</td>
+                            </tr>
+                            <tr class="f-pair" data-pair="3" style="opacity:0.5;">
+                                <td>12 &times; 3</td>
+                                <td>36</td>
+                                <td>Repeat!</td>
+                            </tr>
+                            <tr class="f-pair" data-pair="2" style="opacity:0.5;">
+                                <td>18 &times; 2</td>
+                                <td>36</td>
+                                <td>Repeat!</td>
+                            </tr>
+                            <tr class="f-pair" data-pair="1" style="opacity:0.5;">
+                                <td>36 &times; 1</td>
+                                <td>36</td>
+                                <td>Repeat!</td>
+                            </tr>
+                        </table>
+                        <p style="font-size:0.8rem; margin-top:10px; font-weight:600; color:var(--primary);">💡 Notice:
+                            After 6, we just see "flipped" versions of existing pairs!</p>
+                    </div>
+                </div>
+                <div class="card" id="topic-5">
+                    <h3>6. Sieve of Eratosthenes</h3>
+                    <p style="font-size:1rem; color:var(--text-muted);">The most efficient way to find primes up to N.
+                        "Sieve" out multiples of each prime.</p>
+                    <div id="sieveGrid"
+                        style="display:grid; grid-template-columns: repeat(10, 1fr); gap:5px; margin:15px 0;"></div>
+                    <div id="sieveStatus"
+                        style="text-align:center; font-weight:600; color:var(--primary); margin-bottom:10px;">Click
+                        Start to Sieve Primes up to 50</div>
+                    <button id="sieveBtn" class="try-btn" style="width:100%;">🚀 Start Sieve</button>
+                </div>
+
+                <div class="card" id="topic-6">
+                    <h3>⚡ Performance: Sieve vs. Trial Division</h3>
+                    <p style="font-size:1rem; color:var(--text-muted);">When finding all primes up to N = 1,000,000:</p>
+                    <table>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Trial Division (Normal)</th>
+                            <th>Sieve of Eratosthenes</th>
+                        </tr>
+                        <tr>
+                            <td><b>Strategy</b></td>
+                            <td>Check divisors for <i>every</i> number</td>
+                            <td>"Cross out" multiples of primes</td>
+                        </tr>
+                        <tr>
+                            <td><b>Time Complexity</b></td>
+                            <td>O(N &radic;N)</td>
+                            <td>O(N log log N)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Efficiency</b></td>
+                            <td>Slow for large N</td>
+                            <td>Blazing fast (Industry Standard)</td>
+                        </tr>
+                    </table>
+                    <p style="font-size:0.85rem; margin-top:10px; color:var(--accent); font-weight:600;">
+                        🚀 For N=1M, Trial Division takes ~2-3 seconds, while Sieve takes &lt; 0.1 seconds!
+                    </p>
+
+                    <h4 style="margin-top:20px; color:var(--primary);">📊 Iteration Count Comparison</h4>
+                    <p style="font-size:0.9rem;">How many times does the <i>inner loop</i> actually run?</p>
+                    <table>
+                        <tr>
+                            <th>N (Range)</th>
+                            <th>Trial Division (Checks)</th>
+                            <th>Sieve (Markings)</th>
+                            <th>Efficiency Gain</th>
+                        </tr>
+                        <tr>
+                            <td>100</td>
+                            <td>236</td>
+                            <td>102</td>
+                            <td>~2.3x</td>
+                        </tr>
+                        <tr>
+                            <td>1,000</td>
+                            <td>5,230</td>
+                            <td>1,431</td>
+                            <td>~3.6x</td>
+                        </tr>
+                        <tr>
+                            <td>10,000</td>
+                            <td>124,352</td>
+                            <td>17,143</td>
+                            <td>~7.2x</td>
+                        </tr>
+                        <tr>
+                            <td>1,000,000</td>
+                            <td>~1,000,000,000</td>
+                            <td>~4,321,928</td>
+                            <td><b>~232x Faster!</b></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div style="flex:1; max-height:80vh; overflow-y:auto;" class="scroll-pane">
+                <h2>💻 Practicum</h2>
+                <div class="card" style="border-left: 5px solid var(--secondary);">
+                    <h4>🔹 Multiplication Table (13)</h4>
+                    <pre>public class MainClass {
+  public static void main(String[] args) {
+    for(int i=1; i<=10; i++) {
+        System.out.println(13 + " * " + i + " = " + (13*i));
+    }
+  }
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20for%28int%20i%3D1%3B%20i%3C%3D10%3B%20i%2B%2B%29%20%7B%0A%20%20%20%20%20%20%20%20System.out.println%2813%20%2B%20%22%20%2A%20%22%20%2B%20i%20%2B%20%22%20%3D%20%22%20%2B%20%2813%2Ai%29%29%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D&mode=edit"
+                        target="_blank" class="try-btn">🚀 Try It</a>
+                </div>
+                <div class="card" style="border-left: 5px solid var(--secondary);">
+                    <h4>🔹 Digit Sum</h4>
+                    <pre>public class MainClass {
+  public static void main(String[] args) {
+    int n=1234, s=0;
+    while(n>0) {
+        s += n%10;
+        n /= 10;
+    }
+    System.out.println("Sum: " + s);
+  }
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20int%20n%3D1234%2C%20s%3D0%3B%0A%20%20%20%20while%28n%3E0%29%20%7B%0A%20%20%20%20%20%20%20%20s%20%2B%3D%20n%2510%3B%0A%20%20%20%20%20%20%20%20n%20/%3D%2010%3B%0A%20%20%20%20%7D%0A%20%20%20%20System.out.println%28%22Sum%3A%20%22%20%2B%20s%29%3B%0A%20%20%7D%0A%7D&mode=edit"
+                        target="_blank" class="try-btn">🚀 Try It</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>let idx = 0; document.getElementById('ixBtn').addEventListener('click', () => { const boxes = document.querySelectorAll('.ix'); if (idx < boxes.length) { boxes[idx].style.background = 'var(--primary)'; boxes[idx].style.color = 'white'; boxes[idx].style.borderColor = 'var(--primary)'; idx++; document.getElementById('ixOut').innerText = 'Current: i = ' + idx; } else { boxes.forEach(b => { b.style.background = 'none'; b.style.color = 'inherit'; b.style.borderColor = '#ddd'; }); idx = 0; document.getElementById('ixOut').innerText = 'Loop Reset!'; } });
+
+        // Factor Pair Highlight
+        document.querySelectorAll('.f-pair').forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                const pairId = row.getAttribute('data-pair');
+                document.querySelectorAll(`.f-pair[data-pair="${pairId}"]`).forEach(r => {
+                    r.style.background = 'var(--highlight-bg)';
+                    r.style.opacity = '1';
+                });
+            });
+            row.addEventListener('mouseleave', () => {
+                const pairId = row.getAttribute('data-pair');
+                document.querySelectorAll(`.f-pair[data-pair="${pairId}"]`).forEach(r => {
+                    r.style.background = 'none';
+                    if (r.innerText.includes('Repeat')) r.style.opacity = '0.5';
+                });
+            });
+        });
+
+        // Sieve Logic
+        const grid = document.getElementById('sieveGrid');
+        const sieveBtn = document.getElementById('sieveBtn');
+        const status = document.getElementById('sieveStatus');
+        let cells = [];
+
+        for (let i = 2; i <= 50; i++) {
+            const cell = document.createElement('div');
+            cell.innerText = i;
+            cell.style.cssText = "height:30px; border:1px solid #ddd; border-radius:4px; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.8rem; background:white; transition: 0.3s;";
+            grid.appendChild(cell);
+            cells[i] = cell;
+        }
+
+        sieveBtn.addEventListener('click', async () => {
+            sieveBtn.disabled = true;
+            for (let i = 2; i <= 50; i++) { cells[i].style.background = 'white'; cells[i].style.color = 'inherit'; cells[i].style.opacity = '1'; }
+
+            for (let p = 2; p * p <= 50; p++) {
+                if (cells[p].style.background === 'white') {
+                    cells[p].style.background = 'var(--secondary)';
+                    cells[p].style.color = 'white';
+                    status.innerText = `Prime: ${p}. Marking multiples...`;
+                    await new Promise(r => setTimeout(r, 600));
+
+                    for (let i = p * p; i <= 50; i += p) {
+                        cells[i].style.background = '#fee2e2';
+                        cells[i].style.color = '#ef4444';
+                        cells[i].style.opacity = '0.4';
+                        await new Promise(r => setTimeout(r, 100));
+                    }
+                }
+            }
+
+            for (let i = 2; i <= 50; i++) {
+                if (cells[i].style.background === 'white' || cells[i].style.background.includes('var(--secondary)')) {
+                    cells[i].style.background = 'var(--primary)';
+                    cells[i].style.color = 'white';
+                }
+            }
+            status.innerText = "Sieve Complete! All blue cells are Prime.";
+            sieveBtn.disabled = false;
+        });
+    </script>
+</body>
+
+</html>
+```

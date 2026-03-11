@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Bebas+Neue&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --primary: #4f46e5;
+            --secondary: #9333ea;
+            --accent: #06b6d4;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --highlight-bg: #fef08a;
+            --code-bg: #f1f5f9;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            font-size: 2.8rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-family: 'Bebas Neue';
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            background: var(--card-bg);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-block;
+            font-size: 0.8rem;
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .try-btn {
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+        .try-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        pre {
+            background: var(--code-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono';
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            color: #1e293b;
+        }
+
+        .top-nav {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .scroll-pane::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scroll-pane::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #f1f5f9;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .quiz-opt {
+            width: 100%;
+            text-align: left;
+            padding: 12px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 600;
+        }
+
+        .quiz-opt:hover {
+            background: #eef2ff;
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="top-nav">
+            <a href="00_Index.html" class="btn">🏠 Home</a>
+            <a href="01_PreSession.html" class="btn">🔭 01</a>
+            <a href="02_Concept_Loops.html" class="btn">📖 02</a>
+            <a href="03_Activity.html" class="btn">⚡ 03</a>
+            <a href="04_FillBlanks.html" class="btn">✏️ 04</a>
+            <a href="05_Exploration.html" class="btn">🔍 05</a>
+            <a href="06_LeetCode.html" class="btn">🧩 06</a>
+            <a href="08_ClassQuiz.html" class="btn">🏆 08</a>
+            <a href="13_Revision_Recall.html" class="btn">🧠 13</a>
+            <a href="14_Code_Listing.html" class="btn">📄 14</a>
+        </div>
+
+        <h1 class="header-title">📄 Step 14: Syllabus Repository</h1>
+        <div style="max-width:1000px; margin:0 auto;">
+            <div class="card">
+                <h2 style="margin:0; color:var(--primary);">🕒 Session 1: for & while</h2>
+            </div>
+
+            <!-- Multiplication Table -->
+            <div class="card">
+                <h3>1. Multiplication Table (13)</h3>
+                <pre>for(int i=1; i<=10; i++) {
+    System.out.println(13 + " * " + i + " = " + (13*i));
+}</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic: What happens?</h4>
+                        <p style="font-size:0.9rem; margin:0;">Uses a <code>for</code> loop to iterate from 1 to 10.
+                            Multiplies the base number by the counter <code>i</code> at each step.</p>
+                    </div>
+                    <div style="flex:1; border-left: 2px dashed var(--border); padding-left:15px;">
+                        <h4 style="color:var(--secondary); margin-bottom:5px;">❓ Requirement Change: What if...?</h4>
+                        <p style="font-size:0.9rem; margin:0;"><b>Change:</b> Print table up to 20 instead of
+                            10.<br><b>Do:</b> Change <code>i &lt;= 10</code> to <code>i &lt;= 20</code>.</p>
+                    </div>
+                </div>
+                <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20for%28int%20i%3D1%3B%20i%3C%3D10%3B%20i%2B%2B%29%20%7B%0A%20%20%20%20%20%20%20%20System.out.println%2813%20%2B%20%22%20%2A%20%22%20%2B%20i%20%2B%20%22%20%3D%20%22%20%2B%20%2813%2Ai%29%29%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D&mode=edit"
+                    target="_blank" class="try-btn">🚀 Try Code</a>
+            </div>
+
+            <!-- Sum of Digits -->
+            <div class="card">
+                <h3>2. Sum of Digits (1234 → 10)</h3>
+                <pre>int n=1234, s=0;
+while(n>0) {
+    s += n%10;
+    n /= 10;
+}
+System.out.println("Sum: " + s);</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic: What happens?</h4>
+                        <p style="font-size:0.9rem; margin:0;">Extract last digit using <code>%10</code>, adds to sum,
+                            then removes last digit using <code>/10</code> until n reaches 0.</p>
+                    </div>
+                    <div style="flex:1; border-left: 2px dashed var(--border); padding-left:15px;">
+                        <h4 style="color:var(--secondary); margin-bottom:5px;">❓ Requirement Change: What if...?</h4>
+                        <p style="font-size:0.9rem; margin:0;"><b>Change:</b> Only sum EVEN digits.<br><b>Do:</b> Wrap
+                            <code>s += n%10</code> in an <code>if((n%10)%2 == 0)</code> block.
+                        </p>
+                    </div>
+                </div>
+                <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20int%20n%3D1234%2C%20s%3D0%3B%0A%20%20%20%20while%28n%3E0%29%20%7B%0A%20%20%20%20%20%20%20%20s%20%2B%3D%20n%2510%3B%0A%20%20%20%20%20%20%20%20n%20/%3D%2010%3B%0A%20%20%20%20%7D%0A%20%20%20%20System.out.println%28%22Sum%3A%20%22%20%2B%20s%29%3B%0A%20%20%7D%0A%7D"
+                    target="_blank" class="try-btn">🚀 Try Code</a>
+            </div>
+
+            <!-- Count Digits -->
+            <div class="card">
+                <h3>3. Count Digits (No String)</h3>
+                <pre>int n=98765, count=0;
+while(n>0) {
+    n /= 10;
+    count++;
+}
+System.out.println("Digits: " + count);</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic: What happens?</h4>
+                        <p style="font-size:0.9rem; margin:0;">Divides by 10 repeatedly. Each division removes a digit.
+                            Accumulate total count.</p>
+                    </div>
+                    <div style="flex:1; border-left: 2px dashed var(--border); padding-left:15px;">
+                        <h4 style="color:var(--secondary); margin-bottom:5px;">❓ Requirement Change: What if...?</h4>
+                        <p style="font-size:0.9rem; margin:0;"><b>Change:</b> Input is 0 (should show 1
+                            digit).<br><b>Do:</b> Use a <code>do-while</code> loop to ensure count starts at 1.</p>
+                    </div>
+                </div>
+                <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20int%20n%3D98765%2C%20count%3D0%3B%0A%20%20%20%20while%28n%3E0%29%20%7B%0A%20%20%20%20%20%20%20%20n%20/%3D%2010%3B%0A%20%20%20%20%20%20%20%20count%2B%2B%3B%0A%20%20%20%20%7D%0A%20%20%20%20System.out.println%28%22Digits%3A%20%22%20%2B%20count%29%3B%0A%20%20%7D%0A%7D"
+                    target="_blank" class="try-btn">🚀 Try Code</a>
+            </div>
+
+            <div class="card">
+                <h2 style="margin:0; color:var(--primary);">🕒 Session 2: Loop Problems</h2>
+            </div>
+
+            <!-- Prime Checking -->
+            <div class="card">
+                <h3>4. Print Primes (1 to 100)</h3>
+                <pre>for (int n = 2; n <= 100; n++) {
+    boolean isPrime = true;
+    for (int i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i == 0) { isPrime = false; break; }
+    }
+    if (isPrime) System.out.print(n + " ");
+}</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic: What happens?</h4>
+                        <p style="font-size:0.9rem; margin:0;">Nested loops: Outer selects candidate, inner checks
+                            divisors up to √n. <code>break</code> optimizes for composite numbers.</p>
+                        <p style="font-size:0.8rem; color:var(--primary); margin-top:5px; font-weight:600;">🔍 <a
+                                href="02_Concept_Loops.html#topic-4"
+                                style="color:inherit; text-decoration:underline;">See
+                                Visual Proof: Why &radic;n?</a></p>
+                    </div>
+                    <div style="flex:1; border-left: 2px dashed var(--border); padding-left:15px;">
+                        <h4 style="color:var(--secondary); margin-bottom:5px;">❓ Requirement Change: What if...?</h4>
+                        <p style="font-size:0.9rem; margin:0;"><b>Change:</b> Find first 5 prime numbers
+                            only.<br><b>Do:</b> Add a counter variable; <code>if(count == 5) break;</code> in outer
+                            loop.</p>
+                    </div>
+                </div>
+                <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20for%20%28int%20n%20%3D%202%3B%20n%20%3C%3D%2020%3B%20n%2B%2B%29%20%7B%0A%20%20%20%20%20%20%20%20boolean%20isPrime%20%3D%20true%3B%0A%20%20%20%20%20%20%20%20for%20%28int%20i%20%3D%202%3B%20i%20%3C%3D%20Math.sqrt%28n%29%3B%20i%2B%2B%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20%28n%20%25%20i%20%3D%3D%200%29%20%7B%20isPrime%20%3D%20false%3B%20break%3B%20%7D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20if%20%28isPrime%29%20System.out.print%28n%20%2B%20%22%20%22%29%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D"
+                    target="_blank" class="try-btn">🚀 Try Code</a>
+            </div>
+
+            <!-- FizzBuzz -->
+            <div class="card">
+                <h3>5. FizzBuzz (1-50)</h3>
+                <pre>for (int i = 1; i <= 50; i++) {
+    if (i % 3 == 0 && i % 5 == 0) System.out.println("FizzBuzz");
+    else if (i % 3 == 0) System.out.println("Fizz");
+    else if (i % 5 == 0) System.out.println("Buzz");
+    else System.out.println(i);
+}</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic: What happens?</h4>
+                        <p style="font-size:0.9rem; margin:0;">Priority checking! Must check 15 (3 & 5) first, otherwise
+                            3/5 will "catch" it first and skip "FizzBuzz".</p>
+                    </div>
+                    <div style="flex:1; border-left: 2px dashed var(--border); padding-left:15px;">
+                        <h4 style="color:var(--secondary); margin-bottom:5px;">❓ Requirement Change: What if...?</h4>
+                        <p style="font-size:0.9rem; margin:0;"><b>Change:</b> Instead of 1, start from index 50 to
+                            1.<br><b>Do:</b> for(int i=50; i>=1; i--).</p>
+                    </div>
+                </div>
+                <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20for%20%28int%20i%20%3D%201%3B%20i%20%3C%3D%2020%3B%20i%2B%2B%29%20%7B%0A%20%20%20%20%20%20%20%20if%20%28i%20%25%203%20%3D%3D%200%20%26%26%20i%20%25%205%20%3D%3D%200%29%20System.out.println%28%22FizzBuzz%22%29%3B%0A%20%20%20%20%20%20%20%20else%20if%20%28i%20%25%203%20%3D%3D%200%29%20System.out.println%28%22Fizz%22%29%3B%0A%20%20%20%20%20%20%20%20else%20if%20%28i%20%25%205%20%3D%3D%200%29%20System.out.println%28%22Buzz%22%29%3B%0A%20%20%20%20%20%20%20%20else%20System.out.println%28i%29%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D"
+                    target="_blank" class="try-btn">🚀 Try Code</a>
+            </div>
+
+            <!-- Reverse Factorial -->
+            <div class="card">
+                <h3>6. Reverse a Number (1234 → 4321)</h3>
+                <pre>int n = 1234, rev = 0;
+while (n != 0) {
+    rev = rev * 10 + (n % 10);
+    n /= 10;
+}
+System.out.println("Reversed: " + rev);</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic: What happens?</h4>
+                        <p style="font-size:0.9rem; margin:0;">Build reversed number digit-by-digit. <code>*10</code>
+                            shifts left, <code>%10</code> adds newest digit from right of <code>n</code>.</p>
+                    </div>
+                    <div style="flex:1; border-left: 2px dashed var(--border); padding-left:15px;">
+                        <h4 style="color:var(--secondary); margin-bottom:5px;">❓ Requirement Change: What if...?</h4>
+                        <p style="font-size:0.9rem; margin:0;"><b>Change:</b> Input has trailing zero
+                            (120).<br><b>Do:</b> Output 21 (int) or logic to print 021 (string builder).</p>
+                    </div>
+                </div>
+                <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20int%20n%20%3D%201234%2C%20rev%20%3D%200%3B%0A%20%20%20%20while%20%28n%20%21%3D%200%29%20%7B%0A%20%20%20%20%20%20%20%20rev%20%3D%20rev%20%2A%2010%20%2B%20%28n%20%25%2010%29%3B%0A%20%20%20%20%20%20%20%20n%20/%3D%2010%3B%0A%20%20%20%20%7D%0A%20%20%20%20System.out.println%28%22Reversed%3A%20%22%20%2B%20rev%29%3B%0A%20%20%7D%0A%7D"
+                    target="_blank" class="try-btn">🚀 Try Code</a>
+            </div>
+
+            <!-- Factorial -->
+            <div class="card">
+                <h3>7. Factorial (Loop vs Recursion)</h3>
+                <div style="display:flex; gap:10px;">
+                    <div style="flex:1;">
+                        <p><b>Loop:</b> <code>fact *= i</code></p>
+                    </div>
+                    <div style="flex:1;">
+                        <p><b>Recursion:</b> <code>n * f(n-1)</code></p>
+                    </div>
+                </div>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic: What happens?</h4>
+                        <p style="font-size:0.9rem; margin:0;">Loop uses cumulative product. Recursion breaks problem
+                            into 5 * (4 * (3...)). Base case 0! = 1 is critical.</p>
+                    </div>
+                    <div style="flex:1; border-left: 2px dashed var(--border); padding-left:15px;">
+                        <h4 style="color:var(--secondary); margin-bottom:5px;">❓ Requirement Change: What if...?</h4>
+                        <p style="font-size:0.9rem; margin:0;"><b>Change:</b> Calculate 100!.<br><b>Do:</b> Use
+                            <code>BigInteger</code> as <code>long</code> will overflow.
+                        </p>
+                    </div>
+                </div>
+                <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20long%20fact%20%3D%201%3B%0A%20%20%20%20for%28int%20i%3D1%3B%20i%3C%3D5%3B%20i%2B%2B%29%20fact%20%2A%3D%20i%3B%0A%20%20%20%20System.out.println%28%22Factorial%3A%20%22%20%2B%20fact%29%3B%0A%20%20%7D%0A%7D"
+                    target="_blank" class="try-btn">🚀 Try Code</a>
+            </div>
+
+            <div class="card">
+                <h2 style="margin:0; color:var(--primary);">🕒 Session 3: Nested Loops & Patterns</h2>
+            </div>
+
+            <!-- Right-angled Triangle -->
+            <div class="card">
+                <h3>8. Right-angled Star Triangle (5 rows)</h3>
+                <pre>for (int i = 1; i <= 5; i++) {
+    for (int j = 1; j <= i; j++) {
+        System.out.print("* ");
+    }
+    System.out.println();
+}</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic: What happens?</h4>
+                        <p style="font-size:0.9rem; margin:0;">Outer loop <code>i</code> controls rows (1 to 5). Inner
+                            loop <code>j</code> prints stars based on current row number (Row 1 gets 1 star, etc.).</p>
+                    </div>
+                    <div style="flex:1; border-left: 2px dashed var(--border); padding-left:15px;">
+                        <h4 style="color:var(--secondary); margin-bottom:5px;">❓ Requirement Change: What if...?</h4>
+                        <p style="font-size:0.9rem; margin:0;"><b>Change:</b> Print numbers instead of stars (1 / 2 2 /
+                            3 3 3).<br><b>Do:</b> Change <code>System.out.print("* ")</code> to
+                            <code>System.out.print(i + " ")</code>.
+                        </p>
+                    </div>
+                </div>
+                <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20for%20%28int%20i%20%3D%201%3B%20i%20%3C%3D%205%3B%20i%2B%2B%29%20%7B%0A%20%20%20%20%20%20%20%20for%20%28int%20j%20%3D%201%3B%20j%20%3C%3D%20i%3B%20j%2B%2B%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20System.out.print%28%22%2A%20%22%29%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20System.out.println%28%29%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D"
+                    target="_blank" class="try-btn">🚀 Try Code</a>
+            </div>
+
+            <!-- Inverted Triangle -->
+            <div class="card">
+                <h3>9. Inverted Triangle Pattern</h3>
+                <pre>for (int i = 5; i >= 1; i--) {
+    for (int j = 1; j <= i; j++) {
+        System.out.print("* ");
+    }
+    System.out.println();
+}</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic: What happens?</h4>
+                        <p style="font-size:0.9rem; margin:0;">Exact opposite of the standard triangle. Row count starts
+                            at 5 and decreases. Inner loop follows <code>i</code>.</p>
+                    </div>
+                    <div style="flex:1; border-left: 2px dashed var(--border); padding-left:15px;">
+                        <h4 style="color:var(--secondary); margin-bottom:5px;">❓ Requirement Change: What if...?</h4>
+                        <p style="font-size:0.9rem; margin:0;"><b>Change:</b> Add leading spaces to make it
+                            right-aligned.<br><b>Do:</b> Add a third loop before the star loop to print <code>5-i</code>
+                            spaces.</p>
+                    </div>
+                </div>
+                <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20for%20%28int%20i%20%3D%205%3B%20i%20%3E%3D%201%3B%20i--%29%20%7B%0A%20%20%20%20%20%20%20%20for%20%28int%20j%20%3D%201%3B%20j%20%3C%3D%20i%3B%20j%2B%2B%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20System.out.print%28%22%2A%20%22%29%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20System.out.println%28%29%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D"
+                    target="_blank" class="try-btn">🚀 Try Code</a>
+            </div>
+
+            <!-- Number Pyramid -->
+            <div class="card">
+                <h3>10. Number Pyramid (1 / 1 2 / 1 2 3)</h3>
+                <pre>for (int i = 1; i <= 3; i++) {
+    for (int j = 1; j <= i; j++) {
+        System.out.print(j + " ");
+    }
+    System.out.println();
+}</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic: What happens?</h4>
+                        <p style="font-size:0.9rem; margin:0;">Similar to triangle, but prints the inner counter
+                            <code>j</code>. Since <code>j</code> resets to 1 every row, it always starts from 1.
+                        </p>
+                    </div>
+                    <div style="flex:1; border-left: 2px dashed var(--border); padding-left:15px;">
+                        <h4 style="color:var(--secondary); margin-bottom:5px;">❓ Requirement Change: What if...?</h4>
+                        <p style="font-size:0.9rem; margin:0;"><b>Change:</b> Reverse the numbers (3 2 1 / 2 1 /
+                            1).<br><b>Do:</b> Change inner loop to <code>for(int j=i; j>=1; j--)</code>.</p>
+                    </div>
+                </div>
+                <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20for%20%28int%20i%20%3D%201%3B%20i%20%3C%3D%203%3B%20i%2B%2B%29%20%7B%0A%20%20%20%20%20%20%20%20for%20%28int%20j%20%3D%201%3B%20j%20%3C%3D%20i%3B%20j%2B%2B%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20System.out.print%28j%20%2B%20%22%20%22%29%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20System.out.println%28%29%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D"
+                    target="_blank" class="try-btn">🚀 Try Code</a>
+            </div>
+
+            <div class="card">
+                <h2 style="margin:0; color:var(--primary);">🕒 Session 4: More Patterns + Math</h2>
+            </div>
+
+            <!-- Floyd's Triangle -->
+            <div class="card">
+                <h3>11. Floyd's Triangle</h3>
+                <pre>int count = 1;
+for (int i = 1; i <= 4; i++) {
+    for (int j = 1; j <= i; j++) {
+        System.out.print(count++ + " ");
+    }
+    System.out.println();
+}</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic: What happens?</h4>
+                        <p style="font-size:0.9rem; margin:0;">A running counter that NEVER resets. It keeps
+                            incrementing across all rows and columns.</p>
+                    </div>
+                    <div style="flex:1; border-left: 2px dashed var(--border); padding-left:15px;">
+                        <h4 style="color:var(--secondary); margin-bottom:5px;">❓ Requirement Change: What if...?</h4>
+                        <p style="font-size:0.9rem; margin:0;"><b>Change:</b> Start from 0 instead of 1.<br><b>Do:</b>
+                            Initialize <code>count = 0</code>.</p>
+                    </div>
+                </div>
+                <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20int%20count%20%3D%201%3B%0A%20%20%20%20for%20%28int%20i%20%3D%201%3B%20i%20%3C%3D%204%3B%20i%2B%2B%29%20%7B%0A%20%20%20%20%20%20%20%20for%20%28int%20j%20%3D%201%3B%20j%20%3C%3D%20i%3B%20j%2B%2B%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20System.out.print%28count%2B%2B%20%2B%20%22%20%22%29%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20System.out.println%28%29%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D"
+                    target="_blank" class="try-btn">🚀 Try Code</a>
+            </div>
+
+            <!-- Pascal's Triangle -->
+            <div class="card">
+                <h3>12. Pascal's Triangle (5 rows)</h3>
+                <pre>for (int i = 0; i < 5; i++) {
+    int num = 1;
+    for (int j = 0; j <= i; j++) {
+        System.out.print(num + " ");
+        num = num * (i - j) / (j + 1);
+    }
+    System.out.println();
+}</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic: What happens?</h4>
+                        <p style="font-size:0.9rem; margin:0;">Uses the formula for combinations nCr. Each term is
+                            derived from the previous term in the same row.</p>
+                    </div>
+                    <div style="flex:1; border-left: 2px dashed var(--border); padding-left:15px;">
+                        <h4 style="color:var(--secondary); margin-bottom:5px;">❓ Requirement Change: What if...?</h4>
+                        <p style="font-size:0.9rem; margin:0;"><b>Change:</b> Print centered like a real
+                            triangle.<br><b>Do:</b> Add a space-loop
+                            <code>for(int s=0; s&lt;5-i; s++) print(" ");</code> before <code>j</code> loop.
+                        </p>
+                    </div>
+                </div>
+                <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20for%20%28int%20i%20%3D%200%3B%20i%20%3C%205%3B%20i%2B%2B%29%20%7B%0A%20%20%20%20%20%20%20%20int%20num%20%3D%201%3B%0A%20%20%20%20%20%20%20%20for%20%28int%20j%20%3D%200%3B%20j%20%3C%3D%20i%3B%20j%2B%2B%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20System.out.print%28num%20%2B%20%22%20%22%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20num%20%3D%20num%20%2A%20%28i%20-%20j%29%20/%20%28j%20%2B%201%29%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20System.out.println%28%29%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D"
+                    target="_blank" class="try-btn">🚀 Try Code</a>
+            </div>
+
+            <div class="card">
+                <h2 style="margin:0; color:var(--primary);">🕒 Session 5: Daily Wrap-Up</h2>
+            </div>
+
+            <!-- Arithmetic & Unary Challenge -->
+            <div class="card">
+                <h3>13. Tricky Operators (Unary + Arithmetic)</h3>
+                <pre>int a = 10, b = 5;
+int res = a++ + ++a * --b - b--;
+System.out.println("a:"+a+" b:"+b+" res:"+res);</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic: What happens?</h4>
+                        <p style="font-size:0.9rem; margin:0;">Follows Precedence (Postfix > Unary > Multiplicative >
+                            Additive).
+                            Post-increment changes value AFTER use, pre-increment changes BEFORE use.</p>
+                    </div>
+                    <div style="flex:1; border-left: 2px dashed var(--border); padding-left:15px;">
+                        <h4 style="color:var(--secondary); margin-bottom:5px;">❓ Result Analysis</h4>
+                        <p style="font-size:0.9rem; margin:0;"><b>Step:</b> 10 (a=11) + 12 (a=12) * 4 (b=4) - 4
+                            (b=3).<br><b>Output:</b> a:12 b:3 res:54.</p>
+                    </div>
+                </div>
+                <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%20int%20a%3D10%2C%20b%3D5%3B%20int%20res%20%3D%20a%2B%2B%20%2B%20%2B%2Ba%20%2A%20--b%20-%20b--%3B%20System.out.println%28%22a%3A%22%2Ba%2B%22%20b%3A%22%2Bb%2B%22%20res%3A%22%2Bres%29%3B%20%7D%20%7D"
+                    target="_blank" class="try-btn">🚀 Try Code</a>
+            </div>
+
+            <div class="card">
+                <h2 style="margin:0; color:var(--primary);">🕒 Session 6: TCS Frequent Flyers</h2>
+            </div>
+
+            <!-- Armstrong Number -->
+            <div class="card">
+                <h3>14. Armstrong Number (153, 1634, etc.)</h3>
+                <pre>int n = 153, temp = n, sum = 0;
+int k = String.valueOf(n).length();
+while(temp > 0) {
+    int d = temp % 10;
+    sum += Math.pow(d, k);
+    temp /= 10;
+}
+System.out.println(n + (sum==n ? " is " : " is not ") + "Armstrong");</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:10px;">💡 Logic ( Narcissistic Numbers)</h4>
+                        <p style="font-size:0.9rem; margin-bottom:10px;">An Armstrong number is the sum of its digits
+                            each raised to the <b>power of the number of digits</b>.</p>
+                        <table style="background:var(--bg); font-size:0.8rem;">
+                            <tr>
+                                <th>Number</th>
+                                <th>Digits (k)</th>
+                                <th>Calculation</th>
+                                <th>Result</th>
+                            </tr>
+                            <tr>
+                                <td><b>153</b></td>
+                                <td>3</td>
+                                <td>1³ + 5³ + 3³</td>
+                                <td>1 + 125 + 27 = <b>153</b></td>
+                            </tr>
+                            <tr>
+                                <td><b>1634</b></td>
+                                <td>4</td>
+                                <td>1⁴ + 6⁴ + 3⁴ + 4⁴</td>
+                                <td>1 + 1296 + 81 + 256 = <b>1634</b></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%20int%20n%3D1634%2C%20temp%3Dn%2C%20sum%3D0%3B%20int%20k%20%3D%20String.valueOf%28n%29.length%28%29%3B%20while%28temp%3E0%29%20%7B%20int%20d%3Dtemp%2510%3B%20sum%20%2B%3D%20Math.pow%28d,k%29%3B%20temp%20/%3D%2010%3B%20%7D%20System.out.println%28n%2B%20%22%20is%20Armstrong%3A%20%22%20%2B%20%28sum%3D%3Dn%29%29%3B%20%7D%20%7D"
+                        class="try-btn">🚀 Try Code</a>
+                </div>
+            </div>
+
+            <!-- Strong Number -->
+            <div class="card">
+                <h3>15. Strong Number (145 = 1! + 4! + 5!)</h3>
+                <pre>int n=145, temp=n, sum=0;
+while(temp > 0) {
+    int d = temp % 10, fact=1;
+    for(int i=1; i<=d; i++) fact *= i;
+    sum += fact;
+    temp /= 10;
+}
+System.out.println(n + (sum==n ? " is " : " is not ") + "Strong");</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic</h4>
+                        <p style="font-size:0.9rem; margin:0;">Sum of factorials of digits. If sum matches original,
+                            it's a
+                            Strong number.</p>
+                    </div>
+                    <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%20int%20n%3D145%2C%20temp%3Dn%2C%20sum%3D0%3B%20while%28temp%3E0%29%20%7B%20int%20d%3Dtemp%2510%2C%20fact%3D1%3B%20for%28int%20i%3D1%3B%20i%3C%3Dd%3B%20i%2B%2B%29%20fact%2A%3Di%3B%20sum%20%2B%3D%20fact%3B%20temp%20/%3D%2010%3B%20%7D%20System.out.println%28n%2B%22%20is%20Strong%3A%20%22%2B%28sum%3D%3Dn%29%29%3B%20%7D%20%7D"
+                        class="try-btn">🚀 Try Code</a>
+                </div>
+            </div>
+
+            <!-- Palindrome Number -->
+            <div class="card">
+                <h3>16. Palindrome Number (121 → 121)</h3>
+                <pre>int n=121, temp=n, rev=0;
+while(temp > 0) {
+    rev = rev * 10 + (temp % 10);
+    temp /= 10;
+}
+System.out.println(n + (rev==n ? " is " : " is not ") + "Palindrome");</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic</h4>
+                        <p style="font-size:0.9rem; margin:0;">Uses digit extraction to reverse the number. If original
+                            ==
+                            reversed, it's a Palindrome.</p>
+                    </div>
+                    <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%20int%20n%3D121%2C%20temp%3Dn%2C%20rev%3D0%3B%20while%28temp%3E0%29%20%7B%20rev%20%3D%20rev%20%2A%2010%20%2B%20%28temp%20%25%2010%29%3B%20temp%20/%3D%2010%3B%20%7D%20System.out.println%28n%2B%20%22%20is%20Palindrome%3A%20%22%20%2B%20%28rev%3D%3Dn%29%29%3B%20%7D%20%7D"
+                        class="try-btn">🚀 Try Code</a>
+                </div>
+            </div>
+
+            <!-- Perfect Number -->
+            <div class="card">
+                <h3>17. Perfect Number (6 = 1+2+3)</h3>
+                <pre>int n=6, sum=0;
+for(int i=1; i < n; i++) {
+    if(n % i == 0) sum += i;
+}
+System.out.println(n + (sum==n ? " is " : " is not ") + "Perfect");</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic</h4>
+                        <p style="font-size:0.9rem; margin:0;">Sum of all proper divisors (excluding itself). If sum ==
+                            n,
+                            it's
+                            a Perfect number.</p>
+                    </div>
+                    <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%20int%20n%3D6%2C%20sum%3D0%3B%20for%28int%20i%3D1%3B%20i%20%3C%20n%3B%20i%2B%2B%29%20%7B%20if%28n%20%25%20i%20%3D%3D%200%29%20sum%20%2B%3D%20i%3B%20%7D%20System.out.println%28n%2B%20%22%20is%20Perfect%3A%20%22%20%2B%20%28sum%3D%3Dn%29%29%3B%20%7D%20%7D"
+                        class="try-btn">🚀 Try Code</a>
+                </div>
+            </div>
+
+            <!-- Automorphic Number -->
+            <div class="card">
+                <h3>18. Automorphic Number (25² = 625)</h3>
+                <pre>int n=25, sq = n*n;
+// Logic: Last digits of square match 'n'
+boolean isAuto = (sq % 100 == n); 
+System.out.println(n + (isAuto ? " is " : " is not ") + "Automorphic");</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic</h4>
+                        <p style="font-size:0.9rem; margin:0;">A number whose square ends with the number itself. (e.g.,
+                            5-25,
+                            6-36, 25-625).</p>
+                    </div>
+                    <a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%20int%20n%3D25%2C%20sq%20%3D%20n%2An%3B%20System.out.println%28n%2B%20%22%20is%20Automorphic%3A%20%22%20%2B%20%28sq%25100%3D%3Dn%29%29%3B%20%7D%20%7D"
+                        class="try-btn">🚀 Try Code</a>
+                </div>
+            </div>
+
+            <!-- Innovative Do-While -->
+            <div class="card">
+                <h3>19. ATM Pin Validation (Do-While)</h3>
+                <pre>int d_pin = 8888, entry, attempts = 0;
+do {
+    entry = getPin(); // Mock user input
+    attempts++;
+    if(entry == d_pin) break;
+} while (attempts < 3);</pre>
+                <div style="display:flex; gap:10px; margin:10px 0;">
+                    <div style="flex:1;">
+                        <h4 style="color:var(--primary); margin-bottom:5px;">💡 Logic</h4>
+                        <p style="font-size:0.9rem; margin:0;">Real-world loop: Runs at least once to ask for pin, then
+                            repeats
+                            until matched or max attempts reached.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Table -->
+            <div class="card">
+                <h3>20. Summarizing Loops: for vs while vs do-while</h3>
+                <table>
+                    <tr>
+                        <th>Loop Type</th>
+                        <th>Best Used For...</th>
+                        <th>Check Type</th>
+                    </tr>
+                    <tr>
+                        <td><b>for</b></td>
+                        <td>Fixed range, counting, array traversal.</td>
+                        <td>Entry-controlled</td>
+                    </tr>
+                    <tr>
+                        <td><b>while</b></td>
+                        <td>Unknown iterations, event-driven, condition-based.</td>
+                        <td>Entry-controlled</td>
+                    </tr>
+                    <tr>
+                        <td><b>do-while</b></td>
+                        <td>User menus, running code AT LEAST once.</td>
+                        <td>Exit-controlled</td>
+                    </tr>
+                </table>
+                <div style="margin-top:15px; border-top: 1px solid var(--border); padding-top:10px;">
+                    <h4 style="color:var(--primary);">🎯 HackerRank Challenge</h4>
+                    <p style="font-size:0.9rem;">Solve <b>"Java Loops II"</b>. Focus on math series generation:
+                        <code>a + 2^0*b, a + 2^0*b + 2^1*b...</code>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <script></script>
+</body>
+
+</html>

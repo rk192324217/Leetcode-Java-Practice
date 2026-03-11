@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Day 3 - Interactive Programs with Visuals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Bebas+Neue&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #3b82f6;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --card-bg: #fff;
+            --border: #e2e8f0;
+            --code-bg: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+            color: white;
+            padding: 3rem;
+            text-align: center;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-family: 'Bebas Neue', sans-serif;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 0.5rem;
+        }
+
+        .problem {
+            margin-bottom: 4rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .problem-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .problem-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .problem-desc {
+            opacity: 0.95;
+            font-size: 1.05rem;
+        }
+
+        .problem-body {
+            padding: 2rem;
+        }
+
+        .interactive-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 1024px) {
+            .interactive-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .visual-area {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            min-height: 300px;
+        }
+
+        .visual-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .code-walkthrough {
+            background: var(--code-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid #334155;
+        }
+
+        .code-line {
+            color: #f8fafc;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            line-height: 2;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .code-line.active {
+            background: rgba(245, 158, 11, 0.25);
+            border-left: 4px solid var(--warning);
+            transform: translateX(5px);
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Array Visualization */
+        .array-viz {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .array-cell {
+            width: 60px;
+            height: 60px;
+            border: 3px solid #cbd5e1;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: white;
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .array-cell .index {
+            position: absolute;
+            top: -20px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .array-cell.active {
+            background: linear-gradient(135deg, var(--warning), #fbbf24);
+            color: white;
+            border-color: var(--warning);
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        .array-cell.highlight {
+            background: linear-gradient(135deg, var(--success), #34d399);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .array-cell.comparing {
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+            color: white;
+            border-color: #ec4899;
+        }
+
+        .status-display {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--warning);
+            min-height: 80px;
+        }
+
+        .status-text {
+            font-weight: 700;
+            color: #78350f;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-detail {
+            color: #78350f;
+            font-size: 0.95rem;
+        }
+
+        .explanation-box {
+            background: linear-gradient(135deg, #e0f2fe, #dbeafe);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--primary);
+        }
+
+        .explanation-box h4 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .step-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.8rem;
+            position: relative;
+        }
+
+        .step-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .complexity-box {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--success);
+        }
+
+        .complexity-box strong {
+            color: #065f46;
+        }
+
+        /* Number visualization */
+        .number-breakdown {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .digit-box {
+            width: 70px;
+            height: 70px;
+            border: 3px solid var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            background: white;
+            color: var(--primary);
+            transition: all 0.5s ease;
+        }
+
+        .digit-box.active {
+            background: linear-gradient(135deg, var(--warning), #fbbf24);
+            color: white;
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        /* Pointer visualization */
+        .pointer {
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            color: var(--danger);
+            animation: bounce 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateX(-50%) translateY(0); }
+            to { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .example-output {
+            background: #1e293b;
+            color: #10b981;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        /* Fibonacci visualization */
+        .fib-sequence {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .fib-box {
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            min-width: 50px;
+            text-align: center;
+            font-weight: 700;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .fib-box.current {
+            background: linear-gradient(135deg, var(--warning), #fbbf24);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .keyword { color: #c678dd; }
+        .string { color: #98c379; }
+        .comment { color: #5c6370; font-style: italic; }
+        .number { color: #d19a66; }
+        .function { color: #61afef; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 JAVA DAY 3 - INTERACTIVE LEARNING</h1>
+            <p>All Programs with Visual Walkthroughs & Live Code Execution</p>
+        </div>
+
+        <!-- PROBLEM 1: ARMSTRONG NUMBERS -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">1. 🔢 Armstrong Numbers (1-999)</div>
+                <div class="problem-desc">Find all numbers where sum of digits raised to power of digit count equals the number itself</div>
+            </div>
+            <div class="problem-body">
+                <div class="explanation-box">
+                    <h4>💡 How it Works</h4>
+                    <ul class="step-list">
+                        <li>Count the digits in the number (e.g., 153 has 3 digits)</li>
+                        <li>Raise each digit to the power of digit count: 1³ + 5³ + 3³</li>
+                        <li>If sum equals original number, it's Armstrong!</li>
+                    </ul>
+                </div>
+
+                <div class="interactive-section">
+                    <div class="visual-area">
+                        <div class="visual-title">📊 Visual Breakdown: 153</div>
+                        <div class="number-breakdown" id="armstrong-viz">
+                            <div class="digit-box">1</div>
+                            <div style="font-size:2rem;color:var(--primary);">³</div>
+                            <div class="digit-box">5</div>
+                            <div style="font-size:2rem;color:var(--primary);">³</div>
+                            <div class="digit-box">3</div>
+                            <div style="font-size:2rem;color:var(--primary);">³</div>
+                        </div>
+                        <div style="text-align:center;margin-top:2rem;">
+                            <div style="font-size:1.5rem;font-weight:700;color:var(--primary);">
+                                1 + 125 + 27 = 153 ✓
+                            </div>
+                        </div>
+                        <div class="status-display">
+                            <div class="status-text" id="armstrong-status">Ready to check Armstrong numbers!</div>
+                            <div class="status-detail" id="armstrong-detail">Click Run to see live checking</div>
+                        </div>
+                        <div class="controls">
+                            <button class="btn btn-primary" onclick="runArmstrong()">▶ Run Algorithm</button>
+                            <button class="btn btn-secondary" onclick="resetArmstrong()">🔄 Reset</button>
+                        </div>
+                    </div>
+
+                    <div class="code-walkthrough">
+                        <div class="visual-title" style="color:white;">💻 Code Walkthrough</div>
+                        <code class="code-line" id="arm-1"><span class="keyword">for</span> (<span class="keyword">int</span> num = <span class="number">1</span>; num <= <span class="number">999</span>; num++)</code>
+                        <code class="code-line" id="arm-2">    <span class="keyword">int</span> digits = countDigits(num);</code>
+                        <code class="code-line" id="arm-3">    <span class="keyword">int</span> sum = <span class="number">0</span>, temp = num;</code>
+                        <code class="code-line" id="arm-4">    <span class="keyword">while</span> (temp > <span class="number">0</span>) {</code>
+                        <code class="code-line" id="arm-5">        <span class="keyword">int</span> digit = temp % <span class="number">10</span>;</code>
+                        <code class="code-line" id="arm-6">        sum += Math.pow(digit, digits);</code>
+                        <code class="code-line" id="arm-7">        temp /= <span class="number">10</span>;</code>
+                        <code class="code-line" id="arm-8">    }</code>
+                        <code class="code-line" id="arm-9">    <span class="keyword">if</span> (sum == num)</code>
+                        <code class="code-line" id="arm-10">        System.out.print(num + <span class="string">" "</span>);</code>
+                        
+                        <div class="example-output" style="margin-top:1.5rem;">
+                            <strong>Output:</strong><br>
+                            <span id="armstrong-output">1 2 3 4 5 6 7 8 9 153 370 371 407</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="complexity-box">
+                    <strong>⏱ Time:</strong> O(n × d) where n=999, d=digits<br>
+                    <strong>💾 Space:</strong> O(1)
+                </div>
+            </div>
+        </div>
+
+        <!-- PROBLEM 2: PALINDROME NUMBER -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">2. 🔄 Palindrome Number Check</div>
+                <div class="problem-desc">Check if a number reads the same forwards and backwards (121 → true)</div>
+            </div>
+            <div class="problem-body">
+                <div class="explanation-box">
+                    <h4>💡 How it Works</h4>
+                    <ul class="step-list">
+                        <li>Reverse the number digit by digit</li>
+                        <li>Compare reversed number with original</li>
+                        <li>If they match, it's a palindrome!</li>
+                    </ul>
+                </div>
+
+                <div class="interactive-section">
+                    <div class="visual-area">
+                        <div class="visual-title">📊 Reversing: 121</div>
+                        <div style="display:flex;gap:2rem;justify-content:center;align-items:center;margin:2rem 0;">
+                            <div style="text-align:center;">
+                                <div style="font-size:0.9rem;color:var(--text-muted);margin-bottom:0.5rem;">Original</div>
+                                <div style="font-size:3rem;font-weight:800;color:var(--primary);" id="pal-original">121</div>
+                            </div>
+                            <div style="font-size:3rem;color:var(--accent);">⇄</div>
+                            <div style="text-align:center;">
+                                <div style="font-size:0.9rem;color:var(--text-muted);margin-bottom:0.5rem;">Reversed</div>
+                                <div style="font-size:3rem;font-weight:800;color:var(--success);" id="pal-reversed">121</div>
+                            </div>
+                        </div>
+                        <div class="status-display">
+                            <div class="status-text" id="pal-status">Enter a number to check</div>
+                            <div class="status-detail" id="pal-detail">Palindrome detection in progress...</div>
+                        </div>
+                        <div class="controls">
+                            <input type="number" id="pal-input" value="121" style="padding:0.8rem;border-radius:8px;border:2px solid var(--border);font-size:1rem;width:150px;text-align:center;">
+                            <button class="btn btn-primary" onclick="runPalindrome()">▶ Check</button>
+                        </div>
+                    </div>
+
+                    <div class="code-walkthrough">
+                        <div class="visual-title" style="color:white;">💻 Code Walkthrough</div>
+                        <code class="code-line" id="pal-1"><span class="keyword">int</span> num = <span class="number">121</span>;</code>
+                        <code class="code-line" id="pal-2"><span class="keyword">int</span> original = num;</code>
+                        <code class="code-line" id="pal-3"><span class="keyword">int</span> reversed = <span class="number">0</span>;</code>
+                        <code class="code-line" id="pal-4"><span class="keyword">while</span> (num > <span class="number">0</span>) {</code>
+                        <code class="code-line" id="pal-5">    <span class="keyword">int</span> digit = num % <span class="number">10</span>;</code>
+                        <code class="code-line" id="pal-6">    reversed = reversed * <span class="number">10</span> + digit;</code>
+                        <code class="code-line" id="pal-7">    num /= <span class="number">10</span>;</code>
+                        <code class="code-line" id="pal-8">}</code>
+                        <code class="code-line" id="pal-9"><span class="keyword">return</span> (original == reversed);</code>
+                        
+                        <div class="example-output" style="margin-top:1.5rem;">
+                            <strong>Result:</strong><br>
+                            <span id="pal-output">121 is a palindrome: true ✓</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="complexity-box">
+                    <strong>⏱ Time:</strong> O(d) where d = number of digits<br>
+                    <strong>💾 Space:</strong> O(1)
+                </div>
+            </div>
+        </div>
+
+        <!-- PROBLEM 3: FIBONACCI SERIES -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">3. 🌀 Fibonacci Series</div>
+                <div class="problem-desc">Generate Fibonacci sequence: each number is sum of previous two</div>
+            </div>
+            <div class="problem-body">
+                <div class="explanation-box">
+                    <h4>💡 How it Works</h4>
+                    <ul class="step-list">
+                        <li>Start with 0 and 1</li>
+                        <li>Next number = previous two numbers added together</li>
+                        <li>Pattern: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34...</li>
+                    </ul>
+                </div>
+
+                <div class="interactive-section">
+                    <div class="visual-area">
+                        <div class="visual-title">📊 Fibonacci Sequence (First 10)</div>
+                        <div class="fib-sequence" id="fib-viz">
+                            <div class="fib-box">0</div>
+                            <div class="fib-box">1</div>
+                            <div class="fib-box">1</div>
+                            <div class="fib-box">2</div>
+                            <div class="fib-box">3</div>
+                            <div class="fib-box">5</div>
+                            <div class="fib-box">8</div>
+                            <div class="fib-box">13</div>
+                            <div class="fib-box">21</div>
+                            <div class="fib-box">34</div>
+                        </div>
+                        <div class="status-display">
+                            <div class="status-text" id="fib-status">Ready to generate Fibonacci</div>
+                            <div class="status-detail" id="fib-detail">Watch the pattern emerge!</div>
+                        </div>
+                        <div class="controls">
+                            <button class="btn btn-primary" onclick="runFibonacci()">▶ Generate</button>
+                            <button class="btn btn-secondary" onclick="resetFibonacci()">🔄 Reset</button>
+                        </div>
+                    </div>
+
+                    <div class="code-walkthrough">
+                        <div class="visual-title" style="color:white;">💻 Code Walkthrough</div>
+                        <code class="code-line" id="fib-1"><span class="keyword">int</span> a = <span class="number">0</span>, b = <span class="number">1</span>, n = <span class="number">10</span>;</code>
+                        <code class="code-line" id="fib-2"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {</code>
+                        <code class="code-line" id="fib-3">    System.out.print(a + <span class="string">" "</span>);</code>
+                        <code class="code-line" id="fib-4">    <span class="keyword">int</span> next = a + b;</code>
+                        <code class="code-line" id="fib-5">    a = b;</code>
+                        <code class="code-line" id="fib-6">    b = next;</code>
+                        <code class="code-line" id="fib-7">}</code>
+                        
+                        <div class="example-output" style="margin-top:1.5rem;">
+                            <strong>Output:</strong><br>
+                            <span id="fib-output">0 1 1 2 3 5 8 13 21 34</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="complexity-box">
+                    <strong>⏱ Time:</strong> O(n)<br>
+                    <strong>💾 Space:</strong> O(1)
+                </div>
+            </div>
+        </div>
+
+        <!-- Continue with more problems... -->
+        
+    </div>
+
+    <script>
+        // Armstrong Number Animation
+        async function runArmstrong() {
+            const status = document.getElementById('armstrong-status');
+            const detail = document.getElementById('armstrong-detail');
+            const digits = document.querySelectorAll('.digit-box');
+            
+            // Highlight each digit
+            for (let i = 0; i < digits.length; i++) {
+                document.getElementById(`arm-${i+5}`).classList.add('active');
+                digits[i].classList.add('active');
+                await sleep(500);
+                digits[i].classList.remove('active');
+                document.getElementById(`arm-${i+5}`).classList.remove('active');
+            }
+            
+            document.getElementById('arm-6').classList.add('active');
+            status.textContent = "✓ 153 is an Armstrong number!";
+            detail.textContent = "1³ + 5³ + 3³ = 1 + 125 + 27 = 153";
+            await sleep(1000);
+            document.getElementById('arm-6').classList.remove('active');
+        }
+
+        function resetArmstrong() {
+            document.getElementById('armstrong-status').textContent = "Ready to check Armstrong numbers!";
+            document.getElementById('armstrong-detail').textContent = "Click Run to see live checking";
+            document.querySelectorAll('.digit-box').forEach(d => d.classList.remove('active'));
+            document.querySelectorAll('.code-line').forEach(c => c.classList.remove('active'));
+        }
+
+        // Palindrome Check
+        async function runPalindrome() {
+            const num = parseInt(document.getElementById('pal-input').value);
+            const original = num;
+            let reversed = 0;
+            let temp = num;
+            
+            document.getElementById('pal-original').textContent = num;
+            document.getElementById('pal-reversed').textContent = '...';
+            document.getElementById('pal-status').textContent = 'Reversing...';
+            
+            document.getElementById('pal-1').classList.add('active');
+            await sleep(500);
+            document.getElementById('pal-1').classList.remove('active');
+            
+            while (temp > 0) {
+                document.getElementById('pal-5').classList.add('active');
+                await sleep(400);
+                const digit = temp % 10;
+                document.getElementById('pal-6').classList.add('active');
+                reversed = reversed * 10 + digit;
+                document.getElementById('pal-reversed').textContent = reversed;
+                await sleep(400);
+                document.getElementById('pal-5').classList.remove('active');
+                document.getElementById('pal-6').classList.remove('active');
+                temp = Math.floor(temp / 10);
+            }
+            
+            document.getElementById('pal-9').classList.add('active');
+            const isPal = (original === reversed);
+            document.getElementById('pal-status').textContent = isPal ? '✓ Palindrome!' : '✗ Not a palindrome';
+            document.getElementById('pal-detail').textContent = `${original} ${isPal ? '==' : '!='} ${reversed}`;
+            document.getElementById('pal-output').textContent = `${original} is ${isPal ? '' : 'not '}a palindrome: ${isPal}`;
+            await sleep(1000);
+            document.getElementById('pal-9').classList.remove('active');
+        }
+
+        // Fibonacci Animation
+        async function runFibonacci() {
+            const boxes = document.querySelectorAll('.fib-box');
+            const status = document.getElementById('fib-status');
+            const detail = document.getElementById('fib-detail');
+            
+            for (let i = 0; i < boxes.length; i++) {
+                document.getElementById(`fib-${i < 2 ? i+1 : 4}`).classList.add('active');
+                boxes[i].classList.add('current');
+                
+                if (i >= 2) {
+                    const prev1 = parseInt(boxes[i-1].textContent);
+                    const prev2 = parseInt(boxes[i-2].textContent);
+                    detail.textContent = `${prev2} + ${prev1} = ${prev2 + prev1}`;
+                } else {
+                    detail.textContent = `Starting with ${boxes[i].textContent}`;
+                }
+                
+                await sleep(800);
+                boxes[i].classList.remove('current');
+                document.querySelectorAll('.code-line').forEach(c => c.classList.remove('active'));
+            }
+            
+            status.textContent = "✓ Fibonacci sequence complete!";
+            detail.textContent = "Each number is sum of previous two";
+        }
+
+        function resetFibonacci() {
+            document.querySelectorAll('.fib-box').forEach(b => b.classList.remove('current'));
+            document.querySelectorAll('.code-line').forEach(c => c.classList.remove('active'));
+            document.getElementById('fib-status').textContent = "Ready to generate Fibonacci";
+            document.getElementById('fib-detail').textContent = "Watch the pattern emerge!";
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+    </script>
+</body>
+</html>
+
+        <!-- PROBLEM 4: REVERSE ARRAY (TWO POINTERS) -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">4. ↔️ Reverse Array (Two Pointers)</div>
+                <div class="problem-desc">Reverse array in-place using two pointers: [1,2,3,4,5] → [5,4,3,2,1]</div>
+            </div>
+            <div class="problem-body">
+                <div class="explanation-box">
+                    <h4>💡 Two Pointer Technique</h4>
+                    <ul class="step-list">
+                        <li>Place LEFT pointer at start (index 0)</li>
+                        <li>Place RIGHT pointer at end (index length-1)</li>
+                        <li>Swap elements at LEFT and RIGHT</li>
+                        <li>Move LEFT forward, RIGHT backward</li>
+                        <li>Continue until LEFT >= RIGHT</li>
+                    </ul>
+                </div>
+
+                <div class="interactive-section">
+                    <div class="visual-area">
+                        <div class="visual-title">📊 Array Reversal Visualization</div>
+                        <div class="array-viz" id="reverse-viz">
+                            <div class="array-cell" id="rev-0"><span class="index">[0]</span>1</div>
+                            <div class="array-cell" id="rev-1"><span class="index">[1]</span>2</div>
+                            <div class="array-cell" id="rev-2"><span class="index">[2]</span>3</div>
+                            <div class="array-cell" id="rev-3"><span class="index">[3]</span>4</div>
+                            <div class="array-cell" id="rev-4"><span class="index">[4]</span>5</div>
+                        </div>
+                        <div class="status-display">
+                            <div class="status-text" id="rev-status">Ready to reverse!</div>
+                            <div class="status-detail" id="rev-detail">Watch the pointers swap elements</div>
+                        </div>
+                        <div class="controls">
+                            <button class="btn btn-primary" onclick="runReverse()" id="rev-btn">▶ Run Reversal</button>
+                            <button class="btn btn-secondary" onclick="resetReverse()">🔄 Reset</button>
+                        </div>
+                    </div>
+
+                    <div class="code-walkthrough">
+                        <div class="visual-title" style="color:white;">💻 Code Walkthrough</div>
+                        <code class="code-line" id="rev-c1"><span class="keyword">int</span>[] arr = {<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>};</code>
+                        <code class="code-line" id="rev-c2"><span class="keyword">int</span> left = <span class="number">0</span>;</code>
+                        <code class="code-line" id="rev-c3"><span class="keyword">int</span> right = arr.length - <span class="number">1</span>;</code>
+                        <code class="code-line" id="rev-c4"><span class="keyword">while</span> (left < right) {</code>
+                        <code class="code-line" id="rev-c5">    <span class="comment">// Swap elements</span></code>
+                        <code class="code-line" id="rev-c6">    <span class="keyword">int</span> temp = arr[left];</code>
+                        <code class="code-line" id="rev-c7">    arr[left] = arr[right];</code>
+                        <code class="code-line" id="rev-c8">    arr[right] = temp;</code>
+                        <code class="code-line" id="rev-c9">    left++;</code>
+                        <code class="code-line" id="rev-c10">    right--;</code>
+                        <code class="code-line" id="rev-c11">}</code>
+                        
+                        <div class="example-output" style="margin-top:1.5rem;">
+                            <strong>Result:</strong><br>
+                            <span id="rev-output">Original: [1,2,3,4,5]<br>Reversed: [5,4,3,2,1]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="complexity-box">
+                    <strong>⏱ Time:</strong> O(n)<br>
+                    <strong>💾 Space:</strong> O(1) - In-place reversal!
+                </div>
+            </div>
+        </div>
+
+        <!-- PROBLEM 5: MOVE ZEROS -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">5. 🎯 Move All Zeros to End</div>
+                <div class="problem-desc">Move zeros to end while maintaining order: [1,0,3,0,5] → [1,3,5,0,0]</div>
+            </div>
+            <div class="problem-body">
+                <div class="explanation-box">
+                    <h4>💡 How it Works</h4>
+                    <ul class="step-list">
+                        <li>Use pointer POS to track position for next non-zero</li>
+                        <li>If element is non-zero, place it at POS and increment</li>
+                        <li>After loop, fill remaining positions with zeros</li>
+                    </ul>
+                </div>
+
+                <div class="interactive-section">
+                    <div class="visual-area">
+                        <div class="visual-title">📊 Moving Zeros Visualization</div>
+                        <div class="array-viz" id="zero-viz">
+                            <div class="array-cell" id="zero-0"><span class="index">[0]</span>1</div>
+                            <div class="array-cell" id="zero-1"><span class="index">[1]</span>0</div>
+                            <div class="array-cell" id="zero-2"><span class="index">[2]</span>3</div>
+                            <div class="array-cell" id="zero-3"><span class="index">[3]</span>0</div>
+                            <div class="array-cell" id="zero-4"><span class="index">[4]</span>5</div>
+                        </div>
+                        <div class="status-display">
+                            <div class="status-text" id="zero-status">Ready to move zeros!</div>
+                            <div class="status-detail" id="zero-detail">Watch non-zeros move to front</div>
+                        </div>
+                        <div class="controls">
+                            <button class="btn btn-primary" onclick="runMoveZeros()" id="zero-btn">▶ Move Zeros</button>
+                            <button class="btn btn-secondary" onclick="resetZeros()">🔄 Reset</button>
+                        </div>
+                    </div>
+
+                    <div class="code-walkthrough">
+                        <div class="visual-title" style="color:white;">💻 Code Walkthrough</div>
+                        <code class="code-line" id="zero-c1"><span class="keyword">int</span> pos = <span class="number">0</span>; <span class="comment">// Next non-zero position</span></code>
+                        <code class="code-line" id="zero-c2"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < arr.length; i++) {</code>
+                        <code class="code-line" id="zero-c3">    <span class="keyword">if</span> (arr[i] != <span class="number">0</span>) {</code>
+                        <code class="code-line" id="zero-c4">        arr[pos] = arr[i];</code>
+                        <code class="code-line" id="zero-c5">        pos++;</code>
+                        <code class="code-line" id="zero-c6">    }</code>
+                        <code class="code-line" id="zero-c7">}</code>
+                        <code class="code-line" id="zero-c8"><span class="keyword">while</span> (pos < arr.length) {</code>
+                        <code class="code-line" id="zero-c9">    arr[pos++] = <span class="number">0</span>;</code>
+                        <code class="code-line" id="zero-c10">}</code>
+                        
+                        <div class="example-output" style="margin-top:1.5rem;">
+                            <strong>Result:</strong><br>
+                            <span id="zero-output">Original: [1,0,3,0,5]<br>Result: [1,3,5,0,0]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="complexity-box">
+                    <strong>⏱ Time:</strong> O(n)<br>
+                    <strong>💾 Space:</strong> O(1)
+                </div>
+            </div>
+        </div>
+
+        <!-- PROBLEM 6: KADANE'S ALGORITHM (STAR FEATURE) -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">6. 🌊 Kadane's Algorithm - Maximum Subarray Sum ⭐</div>
+                <div class="problem-desc">Find contiguous subarray with largest sum: [-2,1,-3,4,-1,2,1] → max = 6</div>
+            </div>
+            <div class="problem-body">
+                <div class="explanation-box">
+                    <h4>💡 The Stream Decision Concept</h4>
+                    <p style="margin-bottom:1rem;">At each element, you face a choice:</p>
+                    <ul class="step-list">
+                        <li><strong>Extend:</strong> Add this number to current sum (keep going)</li>
+                        <li><strong>Start Fresh:</strong> Begin a new subarray from here</li>
+                    </ul>
+                    <p style="margin-top:1rem;background:#fff;padding:1rem;border-radius:8px;text-align:center;font-family:'JetBrains Mono';font-weight:700;">
+                        current = max(element, current + element)
+                    </p>
+                    <p style="margin-top:1rem;"><strong>Rule:</strong> If current sum drags you down (negative), restart!</p>
+                </div>
+
+                <div class="interactive-section">
+                    <div class="visual-area">
+                        <div class="visual-title">📊 Kadane's Decision Visualization</div>
+                        <div class="array-viz" id="kadane-viz">
+                            <div class="array-cell" id="kad-0"><span class="index">[0]</span>-2</div>
+                            <div class="array-cell" id="kad-1"><span class="index">[1]</span>1</div>
+                            <div class="array-cell" id="kad-2"><span class="index">[2]</span>-3</div>
+                            <div class="array-cell" id="kad-3"><span class="index">[3]</span>4</div>
+                            <div class="array-cell" id="kad-4"><span class="index">[4]</span>-1</div>
+                            <div class="array-cell" id="kad-5"><span class="index">[5]</span>2</div>
+                            <div class="array-cell" id="kad-6"><span class="index">[6]</span>1</div>
+                        </div>
+                        
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;">
+                            <div style="background:#f1f5f9;padding:1rem;border-radius:8px;border:2px solid var(--border);">
+                                <div style="font-weight:700;color:var(--primary);margin-bottom:0.5rem;">Option 1: Extend</div>
+                                <div id="kad-opt1" style="font-family:'JetBrains Mono';font-size:0.9rem;">current + value = ?</div>
+                            </div>
+                            <div style="background:#f1f5f9;padding:1rem;border-radius:8px;border:2px solid var(--border);">
+                                <div style="font-weight:700;color:var(--primary);margin-bottom:0.5rem;">Option 2: Fresh</div>
+                                <div id="kad-opt2" style="font-family:'JetBrains Mono';font-size:0.9rem;">value = ?</div>
+                            </div>
+                        </div>
+                        
+                        <div class="status-display">
+                            <div class="status-text" id="kad-status">Ready to find max subarray!</div>
+                            <div class="status-detail" id="kad-detail">Watch the extend vs restart decisions</div>
+                        </div>
+                        <div class="controls">
+                            <button class="btn btn-primary" onclick="runKadane()" id="kad-btn">▶ Run Kadane's</button>
+                            <button class="btn btn-secondary" onclick="resetKadane()">🔄 Reset</button>
+                        </div>
+                    </div>
+
+                    <div class="code-walkthrough">
+                        <div class="visual-title" style="color:white;">💻 Code Walkthrough</div>
+                        <code class="code-line" id="kad-c1"><span class="keyword">int</span> current = <span class="number">0</span>;</code>
+                        <code class="code-line" id="kad-c2"><span class="keyword">int</span> maxSum = arr[<span class="number">0</span>];</code>
+                        <code class="code-line" id="kad-c3"><span class="keyword">for</span> (<span class="keyword">int</span> num : arr) {</code>
+                        <code class="code-line" id="kad-c4">    <span class="comment">// Decision: Extend or Fresh?</span></code>
+                        <code class="code-line" id="kad-c5">    current = Math.max(num, current + num);</code>
+                        <code class="code-line" id="kad-c6">    <span class="comment">// Update max if current beats it</span></code>
+                        <code class="code-line" id="kad-c7">    maxSum = Math.max(maxSum, current);</code>
+                        <code class="code-line" id="kad-c8">}</code>
+                        <code class="code-line" id="kad-c9"><span class="keyword">return</span> maxSum;</code>
+                        
+                        <div class="example-output" style="margin-top:1.5rem;">
+                            <strong>Result:</strong><br>
+                            <span id="kad-output">Maximum subarray sum: 6<br>Subarray: [4,-1,2,1]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="complexity-box">
+                    <strong>⏱ Time:</strong> O(n) - Single pass!<br>
+                    <strong>💾 Space:</strong> O(1) - Only two variables
+                </div>
+            </div>
+        </div>
+
+        <!-- PROBLEM 7: TWO SUM -->
+        <div class="problem">
+            <div class="problem-header">
+                <div class="problem-title">7. 🎯 Two Sum (HashMap Approach)</div>
+                <div class="problem-desc">Find two numbers that add to target: [2,7,11,15], target=9 → [0,1]</div>
+            </div>
+            <div class="problem-body">
+                <div class="explanation-box">
+                    <h4>💡 HashMap Strategy</h4>
+                    <ul class="step-list">
+                        <li>Store each number and its index in a HashMap</li>
+                        <li>For each number, calculate complement = target - number</li>
+                        <li>Check if complement exists in map</li>
+                        <li>If found, return both indices!</li>
+                    </ul>
+                </div>
+
+                <div class="interactive-section">
+                    <div class="visual-area">
+                        <div class="visual-title">📊 Two Sum Visualization</div>
+                        <div class="array-viz" id="twosum-viz">
+                            <div class="array-cell" id="ts-0"><span class="index">[0]</span>2</div>
+                            <div class="array-cell" id="ts-1"><span class="index">[1]</span>7</div>
+                            <div class="array-cell" id="ts-2"><span class="index">[2]</span>11</div>
+                            <div class="array-cell" id="ts-3"><span class="index">[3]</span>15</div>
+                        </div>
+                        
+                        <div style="margin:1.5rem 0;">
+                            <div style="text-align:center;font-weight:700;margin-bottom:0.5rem;">Target = 9</div>
+                            <div style="background:#f1f5f9;padding:1rem;border-radius:8px;border:2px solid var(--border);">
+                                <div style="font-weight:700;color:var(--primary);margin-bottom:0.5rem;">HashMap Contents:</div>
+                                <div id="ts-map" style="font-family:'JetBrains Mono';font-size:0.9rem;">{ }</div>
+                            </div>
+                        </div>
+                        
+                        <div class="status-display">
+                            <div class="status-text" id="ts-status">Ready to find pair!</div>
+                            <div class="status-detail" id="ts-detail">Watch HashMap fill and search</div>
+                        </div>
+                        <div class="controls">
+                            <button class="btn btn-primary" onclick="runTwoSum()" id="ts-btn">▶ Find Pair</button>
+                            <button class="btn btn-secondary" onclick="resetTwoSum()">🔄 Reset</button>
+                        </div>
+                    </div>
+
+                    <div class="code-walkthrough">
+                        <div class="visual-title" style="color:white;">💻 Code Walkthrough</div>
+                        <code class="code-line" id="ts-c1">Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap<>();</code>
+                        <code class="code-line" id="ts-c2"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < nums.length; i++) {</code>
+                        <code class="code-line" id="ts-c3">    <span class="keyword">int</span> complement = target - nums[i];</code>
+                        <code class="code-line" id="ts-c4">    <span class="keyword">if</span> (map.containsKey(complement)) {</code>
+                        <code class="code-line" id="ts-c5">        <span class="keyword">return new int</span>[] {map.get(complement), i};</code>
+                        <code class="code-line" id="ts-c6">    }</code>
+                        <code class="code-line" id="ts-c7">    map.put(nums[i], i);</code>
+                        <code class="code-line" id="ts-c8">}</code>
+                        
+                        <div class="example-output" style="margin-top:1.5rem;">
+                            <strong>Result:</strong><br>
+                            <span id="ts-output">Indices: [0, 1]<br>2 + 7 = 9 ✓</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="complexity-box">
+                    <strong>⏱ Time:</strong> O(n) - Single pass<br>
+                    <strong>💾 Space:</strong> O(n) - HashMap storage
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align:center;padding:3rem;background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%);color:white;border-radius:12px;margin-top:2rem;">
+            <h2 style="font-size:2rem;margin-bottom:1rem;">🎓 Congratulations!</h2>
+            <p style="font-size:1.2rem;opacity:0.95;">You've completed Java Day 3 - Arrays Masterclass</p>
+            <p style="margin-top:1rem;opacity:0.9;">All programs with interactive visuals & code walkthroughs</p>
+        </div>
+    </div>
+
+    <script>
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Reverse Array Animation
+        async function runReverse() {
+            const arr = [1, 2, 3, 4, 5];
+            let left = 0, right = arr.length - 1;
+            
+            document.getElementById('rev-btn').disabled = true;
+            document.getElementById('rev-status').textContent = 'Reversing...';
+            
+            while (left < right) {
+                // Highlight pointers
+                document.getElementById(`rev-${left}`).classList.add('active');
+                document.getElementById(`rev-${right}`).classList.add('comparing');
+                document.getElementById('rev-c4').classList.add('active');
+                
+                document.getElementById('rev-detail').textContent = `Swapping positions ${left} and ${right}`;
+                await sleep(1000);
+                
+                // Swap
+                document.getElementById('rev-c6').classList.add('active');
+                await sleep(400);
+                const temp = arr[left];
+                document.getElementById('rev-c7').classList.add('active');
+                arr[left] = arr[right];
+                document.getElementById(`rev-${left}`).textContent = arr[left];
+                await sleep(400);
+                document.getElementById('rev-c8').classList.add('active');
+                arr[right] = temp;
+                document.getElementById(`rev-${right}`).textContent = arr[right];
+                await sleep(600);
+                
+                // Remove highlights
+                document.getElementById(`rev-${left}`).classList.remove('active');
+                document.getElementById(`rev-${right}`).classList.remove('comparing');
+                document.querySelectorAll('.code-line').forEach(c => c.classList.remove('active'));
+                
+                left++;
+                right--;
+                await sleep(400);
+            }
+            
+            document.getElementById('rev-status').textContent = '✓ Array reversed!';
+            document.getElementById('rev-detail').textContent = `Result: [${arr.join(',')}]`;
+            document.getElementById('rev-btn').disabled = false;
+        }
+
+        function resetReverse() {
+            const initial = [1, 2, 3, 4, 5];
+            initial.forEach((val, i) => {
+                document.getElementById(`rev-${i}`).textContent = val;
+                document.getElementById(`rev-${i}`).classList.remove('active', 'comparing');
+            });
+            document.querySelectorAll('.code-line').forEach(c => c.classList.remove('active'));
+            document.getElementById('rev-status').textContent = 'Ready to reverse!';
+            document.getElementById('rev-detail').textContent = 'Watch the pointers swap elements';
+            document.getElementById('rev-btn').disabled = false;
+        }
+
+        // Move Zeros Animation
+        async function runMoveZeros() {
+            const arr = [1, 0, 3, 0, 5];
+            let pos = 0;
+            
+            document.getElementById('zero-btn').disabled = true;
+            document.getElementById('zero-c1').classList.add('active');
+            await sleep(800);
+            document.getElementById('zero-c1').classList.remove('active');
+            
+            for (let i = 0; i < arr.length; i++) {
+                document.getElementById(`zero-${i}`).classList.add('active');
+                document.getElementById('zero-c3').classList.add('active');
+                await sleep(600);
+                
+                if (arr[i] !== 0) {
+                    document.getElementById('zero-c4').classList.add('active');
+                    document.getElementById('zero-detail').textContent = `Moving ${arr[i]} to position ${pos}`;
+                    
+                    if (i !== pos) {
+                        arr[pos] = arr[i];
+                        document.getElementById(`zero-${pos}`).textContent = arr[i];
+                        document.getElementById(`zero-${pos}`).classList.add('highlight');
+                    }
+                    await sleep(600);
+                    pos++;
+                    document.getElementById('zero-c5').classList.add('active');
+                    await sleep(400);
+                }
+                
+                document.getElementById(`zero-${i}`).classList.remove('active');
+                document.querySelectorAll('.code-line').forEach(c => c.classList.remove('active'));
+                await sleep(300);
+            }
+            
+            // Fill with zeros
+            document.getElementById('zero-c8').classList.add('active');
+            while (pos < arr.length) {
+                document.getElementById('zero-c9').classList.add('active');
+                document.getElementById(`zero-${pos}`).textContent = 0;
+                document.getElementById(`zero-${pos}`).classList.add('highlight');
+                await sleep(400);
+                pos++;
+            }
+            
+            document.getElementById('zero-status').textContent = '✓ Zeros moved!';
+            document.getElementById('zero-detail').textContent = `Result: [${arr.join(',')}]`;
+            document.querySelectorAll('.code-line').forEach(c => c.classList.remove('active'));
+            document.getElementById('zero-btn').disabled = false;
+        }
+
+        function resetZeros() {
+            const initial = [1, 0, 3, 0, 5];
+            initial.forEach((val, i) => {
+                document.getElementById(`zero-${i}`).textContent = val;
+                document.getElementById(`zero-${i}`).classList.remove('active', 'highlight');
+            });
+            document.querySelectorAll('.code-line').forEach(c => c.classList.remove('active'));
+            document.getElementById('zero-status').textContent = 'Ready to move zeros!';
+            document.getElementById('zero-detail').textContent = 'Watch non-zeros move to front';
+            document.getElementById('zero-btn').disabled = false;
+        }
+
+        // Kadane's Algorithm Animation
+        async function runKadane() {
+            const arr = [-2, 1, -3, 4, -1, 2, 1];
+            let current = 0;
+            let maxSum = arr[0];
+            
+            document.getElementById('kad-btn').disabled = true;
+            document.getElementById('kad-c1').classList.add('active');
+            await sleep(600);
+            document.getElementById('kad-c1').classList.remove('active');
+            document.getElementById('kad-c2').classList.add('active');
+            await sleep(600);
+            document.getElementById('kad-c2').classList.remove('active');
+            
+            for (let i = 0; i < arr.length; i++) {
+                document.getElementById(`kad-${i}`).classList.add('active');
+                document.getElementById('kad-c5').classList.add('active');
+                
+                const extend = current + arr[i];
+                const fresh = arr[i];
+                
+                // Show options
+                document.getElementById('kad-opt1').textContent = `Extend: ${current} + ${arr[i]} = ${extend}`;
+                document.getElementById('kad-opt2').textContent = `Fresh: ${arr[i]}`;
+                await sleep(800);
+                
+                // Make decision
+                current = Math.max(arr[i], current + arr[i]);
+                
+                if (current === fresh) {
+                    document.getElementById('kad-status').textContent = '🆕 Starting Fresh!';
+                    document.getElementById('kad-detail').textContent = `current = ${current}`;
+                    document.getElementById('kad-opt2').style.background = 'linear-gradient(135deg, #d1fae5, #a7f3d0)';
+                    document.getElementById('kad-opt2').style.borderColor = '#10b981';
+                } else {
+                    document.getElementById('kad-status').textContent = '🔄 Extending!';
+                    document.getElementById('kad-detail').textContent = `current = ${current}`;
+                    document.getElementById('kad-opt1').style.background = 'linear-gradient(135deg, #d1fae5, #a7f3d0)';
+                    document.getElementById('kad-opt1').style.borderColor = '#10b981';
+                }
+                
+                await sleep(800);
+                
+                document.getElementById('kad-c7').classList.add('active');
+                if (current > maxSum) {
+                    maxSum = current;
+                    document.getElementById(`kad-${i}`).classList.add('highlight');
+                    document.getElementById('kad-detail').textContent = `🎯 New max: ${maxSum}!`;
+                }
+                await sleep(600);
+                
+                document.getElementById(`kad-${i}`).classList.remove('active');
+                document.querySelectorAll('.code-line').forEach(c => c.classList.remove('active'));
+                document.getElementById('kad-opt1').style.background = '#f1f5f9';
+                document.getElementById('kad-opt1').style.borderColor = 'var(--border)';
+                document.getElementById('kad-opt2').style.background = '#f1f5f9';
+                document.getElementById('kad-opt2').style.borderColor = 'var(--border)';
+                await sleep(300);
+            }
+            
+            document.getElementById('kad-status').textContent = `✓ Maximum subarray sum: ${maxSum}`;
+            document.getElementById('kad-detail').textContent = 'Algorithm complete!';
+            document.getElementById('kad-btn').disabled = false;
+        }
+
+        function resetKadane() {
+            document.querySelectorAll('[id^="kad-"]').forEach(el => {
+                el.classList.remove('active', 'highlight', 'comparing');
+            });
+            document.querySelectorAll('.code-line').forEach(c => c.classList.remove('active'));
+            document.getElementById('kad-opt1').textContent = 'current + value = ?';
+            document.getElementById('kad-opt2').textContent = 'value = ?';
+            document.getElementById('kad-opt1').style.background = '#f1f5f9';
+            document.getElementById('kad-opt1').style.borderColor = 'var(--border)';
+            document.getElementById('kad-opt2').style.background = '#f1f5f9';
+            document.getElementById('kad-opt2').style.borderColor = 'var(--border)';
+            document.getElementById('kad-status').textContent = 'Ready to find max subarray!';
+            document.getElementById('kad-detail').textContent = 'Watch the extend vs restart decisions';
+            document.getElementById('kad-btn').disabled = false;
+        }
+
+        // Two Sum Animation
+        async function runTwoSum() {
+            const nums = [2, 7, 11, 15];
+            const target = 9;
+            const map = {};
+            
+            document.getElementById('ts-btn').disabled = true;
+            document.getElementById('ts-c1').classList.add('active');
+            await sleep(800);
+            document.getElementById('ts-c1').classList.remove('active');
+            
+            for (let i = 0; i < nums.length; i++) {
+                document.getElementById(`ts-${i}`).classList.add('active');
+                document.getElementById('ts-c3').classList.add('active');
+                
+                const complement = target - nums[i];
+                document.getElementById('ts-detail').textContent = `num=${nums[i]}, complement=${complement}`;
+                await sleep(800);
+                
+                document.getElementById('ts-c4').classList.add('active');
+                await sleep(600);
+                
+                if (map[complement] !== undefined) {
+                    document.getElementById('ts-c5').classList.add('active');
+                    document.getElementById(`ts-${map[complement]}`).classList.add('highlight');
+                    document.getElementById(`ts-${i}`).classList.add('highlight');
+                    document.getElementById('ts-status').textContent = `✓ Found pair!`;
+                    document.getElementById('ts-detail').textContent = `${nums[map[complement]]} + ${nums[i]} = ${target}`;
+                    document.getElementById('ts-output').innerHTML = `Indices: [${map[complement]}, ${i}]<br>${nums[map[complement]]} + ${nums[i]} = ${target} ✓`;
+                    await sleep(2000);
+                    document.getElementById('ts-btn').disabled = false;
+                    return;
+                }
+                
+                document.getElementById('ts-c7').classList.add('active');
+                map[nums[i]] = i;
+                document.getElementById('ts-map').textContent = `{ ${Object.keys(map).map(k => `${k}:${map[k]}`).join(', ')} }`;
+                await sleep(600);
+                
+                document.getElementById(`ts-${i}`).classList.remove('active');
+                document.querySelectorAll('.code-line').forEach(c => c.classList.remove('active'));
+                await sleep(300);
+            }
+            
+            document.getElementById('ts-btn').disabled = false;
+        }
+
+        function resetTwoSum() {
+            document.querySelectorAll('[id^="ts-"]').forEach(el => {
+                el.classList.remove('active', 'highlight');
+            });
+            document.querySelectorAll('.code-line').forEach(c => c.classList.remove('active'));
+            document.getElementById('ts-map').textContent = '{ }';
+            document.getElementById('ts-status').textContent = 'Ready to find pair!';
+            document.getElementById('ts-detail').textContent = 'Watch HashMap fill and search';
+            document.getElementById('ts-output').innerHTML = 'Indices: [0, 1]<br>2 + 7 = 9 ✓';
+            document.getElementById('ts-btn').disabled = false;
+        }
+    </script>
+</body>
+</html>

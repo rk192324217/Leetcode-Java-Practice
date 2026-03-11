@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Day 3 – Page 2: Concepts & References</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Bebas+Neue&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --primary: #4f46e5;
+            --secondary: #7c3aed;
+            --accent: #059669;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --card-bg: #fff;
+            --border: #e2e8f0;
+            --code-bg: #1e293b;
+            --code-text: #f8fafc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-nav {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: .7rem 2rem;
+            display: flex;
+            gap: .8rem;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
+        }
+
+        .page-nav-title {
+            font-family: 'Bebas Neue';
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-right: auto;
+        }
+
+        .page-btn {
+            padding: .4rem 1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: .8rem;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: #fff;
+            transition: .2s;
+        }
+
+        .page-btn.active,
+        .page-btn:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .side-nav {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 50;
+        }
+
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: .3s;
+            text-decoration: none;
+        }
+
+        .nav-dot.active,
+        .nav-dot:hover {
+            background: var(--primary);
+            transform: scale(1.4);
+        }
+
+        .header-title {
+            font-family: 'Bebas Neue';
+            font-size: 3.2rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: #fff;
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: .8rem;
+        }
+
+        .phase-tag {
+            font-family: 'Bebas Neue';
+            font-size: 1.3rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+            margin: 2.5rem 0 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.8rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, .04);
+            transition: .3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 12px 24px rgba(79, 70, 229, .08);
+            transform: translateY(-2px);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: .6rem;
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            color: var(--primary);
+            margin-bottom: .8rem;
+        }
+
+        /* Pointer Viz */
+        .ptr-diagram {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            justify-content: center;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .ptr-box {
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 10px 16px;
+            background: #eef2ff;
+            text-align: center;
+            font-family: 'JetBrains Mono';
+            font-size: .8rem;
+            min-width: 90px;
+        }
+
+        .ptr-box.heap {
+            background: #fdf4ff;
+            border-color: var(--secondary);
+        }
+
+        .ptr-box.null-box {
+            background: #fee2e2;
+            border-color: #dc2626;
+            color: #dc2626;
+        }
+
+        .ptr-arrow {
+            font-size: 1.4rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            padding: 0 6px;
+        }
+
+        .ptr-label {
+            font-size: .68rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .ptr-addr {
+            font-size: .65rem;
+            font-family: 'JetBrains Mono';
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .step-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            text-align: center;
+            line-height: 22px;
+            font-size: .75rem;
+            font-weight: 700;
+            margin-right: 6px;
+        }
+
+        /* Hash Viz */
+        .hash-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .hash-box {
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 18px;
+            background: white;
+            text-align: center;
+            font-family: 'JetBrains Mono';
+            font-size: .82rem;
+            min-width: 80px;
+            transition: .4s;
+        }
+
+        .hash-box.key-box {
+            background: #eef2ff;
+            border-color: var(--primary);
+        }
+
+        .hash-box.fn-box {
+            background: #f0fdf4;
+            border-color: var(--accent);
+        }
+
+        .hash-box.bucket-box {
+            background: #fdf4ff;
+            border-color: var(--secondary);
+        }
+
+        .hash-box.highlighted {
+            transform: scale(1.08);
+            box-shadow: 0 0 14px rgba(245, 158, 11, .5);
+            border-color: #f59e0b;
+        }
+
+        .hash-arrow {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        .hash-table-visual {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        .hash-slot {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 4px;
+            text-align: center;
+            font-family: 'JetBrains Mono';
+            font-size: .72rem;
+            background: white;
+            transition: .4s;
+            min-height: 52px;
+        }
+
+        .hash-slot.filled {
+            background: #eef2ff;
+            border-color: var(--primary);
+        }
+
+        .hash-slot.collision {
+            background: #fef9c3;
+            border-color: #ca8a04;
+        }
+
+        .slot-idx {
+            font-size: .6rem;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        /* Thread Viz */
+        .thread-bar-wrap {
+            width: 100%;
+            margin: 8px 0;
+        }
+
+        .thread-label {
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 3px;
+        }
+
+        .thread-track {
+            width: 100%;
+            height: 14px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .thread-fill {
+            height: 100%;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 3s ease;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: .88rem;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: var(--primary);
+            color: #fff;
+            padding: 9px 14px;
+            text-align: left;
+        }
+
+        td {
+            border: 1px solid var(--border);
+            padding: 9px 14px;
+        }
+
+        tr:nth-child(even) td {
+            background: #f8fafc;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: .65rem 1.3rem;
+            border-radius: 10px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: .85rem;
+            transition: .3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, .35);
+        }
+
+        .btn-sm {
+            padding: .4rem .9rem;
+            font-size: .78rem;
+            border-radius: 8px;
+        }
+
+        .btn-outline {
+            background: #fff;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.5rem;
+            color: var(--text-muted);
+            font-size: .85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        code {
+            background: #f1f5f9;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono';
+            font-size: .88em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="page-nav">
+        <span class="page-nav-title">☕ Java Day 3 Masterclass</span>
+        <a href="Day3_Page1_Syllabus.html" class="page-btn">📘 Page 1: Syllabus</a>
+        <a href="Day3_Page2_Concepts.html" class="page-btn active">🧠 Page 2: Concepts</a>
+        <a href="Day3_Page3_LeetCode.html" class="page-btn">🏆 Page 3: LeetCode</a>
+        <a href="00_Index.html" class="page-btn btn-outline">🏠 Hub</a>
+    </nav>
+
+    <div class="side-nav">
+        <a href="#welcome" class="nav-dot active" title="Welcome"></a>
+        <a href="#pointers" class="nav-dot" title="Pointers"></a>
+        <a href="#hashing" class="nav-dot" title="Hashing"></a>
+        <a href="#threads" class="nav-dot" title="Multithreading"></a>
+        <a href="#comparisons" class="nav-dot" title="Comparisons"></a>
+    </div>
+
+    <div class="container">
+
+        <header id="welcome" style="text-align:center;padding:2.5rem 0 1.5rem;">
+            <div class="section-tag">Page 2 of 3 · Concepts &amp; References</div>
+            <h1 class="header-title">Advanced Concepts</h1>
+            <p style="font-size:1.05rem;color:var(--text-muted);max-width:580px;margin:.5rem auto 0;">Pointers, Hashing,
+                Multithreading — clear visual explanations plus reference comparison tables.</p>
+        </header>
+
+        <!-- ========== POINTERS ========== -->
+        <section id="pointers">
+            <div class="phase-tag">§1 · Pointers &amp; References</div>
+            <div class="card">
+                <h2>1. Pointers — How Java References Work</h2>
+                <p>Java doesn't have C-style pointers. Instead, <b>reference variables</b> on the <b>Stack</b> store the
+                    <em>memory address</em> of an object on the <b>Heap</b>.
+                </p>
+
+                <!-- Step 1 -->
+                <h4 style="margin:1.5rem 0 .6rem;"><span class="step-badge">1</span> Declaring a reference</h4>
+                <div>
+                    <div class="ptr-box" style="border-style:dashed;background:#f8fafc;color:var(--text-muted);">
+                        <b>obj</b><br><span class="ptr-addr">null</span>
+                    </div>
+                    <div class="ptr-label">Stack (variable)</div>
+                </div>
+                <div class="ptr-arrow" style="color:var(--border);">✖</div>
+                <div>
+                    <div
+                        style="border:2px dashed var(--border);border-radius:10px;padding:10px 16px;text-align:center;font-family:'JetBrains Mono';font-size:.8rem;color:var(--text-muted);min-width:90px;">
+                        <b>[No Object]</b>
+                    </div>
+                    <div class="ptr-label">No memory assigned</div>
+                </div>
+                <div
+                    style="background:#f1f5f9;border-radius:8px;padding:8px 14px;font-family:'JetBrains Mono';font-size:.82rem;margin-bottom:1rem;">
+                    Person obj; &nbsp;// obj = null (no object yet)</div>
+
+                <!-- Step 2 -->
+                <h4 style="margin:1.2rem 0 .6rem;"><span class="step-badge">2</span> Creating an object — Stack → Heap
+                </h4>
+                <div class="ptr-diagram">
+                    <div>
+                        <div class="ptr-box"><b>obj</b><br><span class="ptr-addr">6731 (0x1A4B)</span></div>
+                        <div class="ptr-label">Stack (holds address)</div>
+                    </div>
+                    <div class="ptr-arrow">──────→</div>
+                    <div>
+                        <div class="ptr-box heap"><b>Person</b><br><span style="font-size:.7rem;">name:"Ali"<br>age:
+                                21</span><br><span class="ptr-addr">@ 6731</span></div>
+                        <div class="ptr-label">Heap (actual object)</div>
+                    </div>
+                </div>
+                <div
+                    style="background:#f1f5f9;border-radius:8px;padding:8px 14px;font-family:'JetBrains Mono';font-size:.82rem;margin-bottom:1rem;">
+                    obj = new Person("Ali", 21); &nbsp;// Heap address stored in obj</div>
+
+                <!-- Step 3 -->
+                <h4 style="margin:1.2rem 0 .6rem;"><span class="step-badge">3</span> Two references → Same object</h4>
+                <div class="ptr-diagram">
+                    <div style="display:flex;flex-direction:column;gap:8px;">
+                        <div class="ptr-box"><b>ref1</b><br><span class="ptr-addr">0x1A4B</span></div>
+                        <div class="ptr-box"><b>ref2</b><br><span class="ptr-addr">0x1A4B</span></div>
+                    </div>
+                    <div class="ptr-arrow">──────→</div>
+                    <div>
+                        <div class="ptr-box heap"><b>Person (Ali)</b><br><span
+                                style="font-size:.7rem;">name:"Ali"<br>age:
+                                21</span><br><span class="ptr-addr">@ 0x1A4B</span></div>
+                        <div class="ptr-label">Same Heap object</div>
+                    </div>
+                </div>
+                <div
+                    style="background:#f1f5f9;border-radius:8px;padding:8px 14px;font-family:'JetBrains Mono';font-size:.82rem;margin-bottom:1rem;">
+                    Person ref2 = ref1; &nbsp;// Both point to same object!
+                </div>
+
+                <!-- Step 4 -->
+                <h4 style="margin:1.2rem 0 .6rem;"><span class="step-badge">4</span> Function Call — Pass address (Ali)
+                </h4>
+                <div class="ptr-diagram">
+                    <div style="border:1px dashed var(--primary);padding:10px;border-radius:10px;text-align:center;">
+                        <div style="font-size:.65rem;color:var(--primary);margin-bottom:5px;"><b>Stack Frame:
+                                update()</b></div>
+                        <div class="ptr-box" style="background:#fef3c7;border-color:#f59e0b;"><b>param p</b><br><span
+                                class="ptr-addr">0x1A4B</span></div>
+                    </div>
+                    <div class="ptr-arrow" style="color:#f59e0b;">↘</div>
+                    <div>
+                        <div class="ptr-box heap"><b>Person</b><br><span style="font-size:.7rem;">name:"<span
+                                    style="color:#dc2626;font-weight:700;">Zayd</span>"<br>age: 21</span><br><span
+                                class="ptr-addr">@ 0x1A4B</span></div>
+                        <div class="ptr-label">Object updated via parameter</div>
+                    </div>
+                </div>
+                <div
+                    style="background:#f1f5f9;border-radius:8px;padding:8px 14px;font-family:'JetBrains Mono';font-size:.82rem;margin-bottom:1rem;">
+                    void update(Person p) { p.name = "Zayd"; }<br>
+                    update(obj); // Ali's name is now "Zayd"!
+                </div>
+
+                <!-- Step 5 -->
+                <h4 style="margin:1.2rem 0 .6rem;"><span class="step-badge">5</span> Differentiating Objects —
+                    Comparison</h4>
+                <p style="font-size:.88rem;color:var(--text-muted);margin-bottom:.8rem;">To have <b>different</b> data,
+                    you MUST have <b>different</b> addresses (different boxes on the Heap).</p>
+                <div class="ptr-diagram">
+                    <div style="display:flex;flex-direction:column;gap:8px;">
+                        <div class="ptr-box"><b>obj1</b><br><span class="ptr-addr">0x1A4B</span></div>
+                        <div class="ptr-box"><b>obj2</b><br><span class="ptr-addr">0x2BC0</span></div>
+                    </div>
+                    <div class="ptr-arrow" style="display:block;text-align:center;">→<br>→</div>
+                    <div style="display:flex;flex-direction:column;gap:8px;">
+                        <div class="ptr-box heap"><b>Person (Ali)</b><br><span
+                                style="font-size:.7rem;">name:"Ali"</span><br><span class="ptr-addr">@ 1A4B</span></div>
+                        <div class="ptr-box heap" style="background:#f0fdf4;border-color:var(--accent);"><b>Person
+                                (Sara)</b><br><span style="font-size:.7rem;">name:"Sara"</span><br><span
+                                class="ptr-addr">@ 2BC0</span></div>
+                    </div>
+                </div>
+                <div
+                    style="margin-top:1rem;background:#fef9c3;padding:10px 14px;border-radius:8px;font-size:.88rem;border-left:4px solid #ca8a04;">
+                    ⚠️ <b>Key Difference:</b> <code>obj1</code> and <code>obj2</code> can have <b>different names</b>
+                    because they point to two <b>separate locations</b> on the Heap. Two remotes for two DIFFERENT TVs.
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== HASHING ========== -->
+        <section id="hashing">
+            <div class="phase-tag">§2 · Hashing</div>
+            <div class="card">
+                <h2>2. Hashing — Key → Index in O(1)</h2>
+                <p>A <b>Hash Function</b> converts any key into a fixed-size integer index, allowing direct memory
+                    access — no searching required.</p>
+
+                <!-- Flow Diagram -->
+                <h4 style="margin:1.5rem 0 .8rem;">Step-by-Step Flow</h4>
+                <div class="hash-flow" id="hash-flow-viz">
+                    <div class="hash-box key-box" id="hv-key"><b>Key</b><br><span
+                            style="font-size:.7rem;">"apple"</span></div>
+                    <div class="hash-arrow">→</div>
+                    <div class="hash-box fn-box" id="hv-fn"><b>hashCode()</b><br><span style="font-size:.7rem;">hash %
+                            capacity</span></div>
+                    <div class="hash-arrow">→</div>
+                    <div class="hash-box bucket-box" id="hv-bk"><b>Bucket [3]</b><br><span
+                            style="font-size:.7rem;">address in table</span></div>
+                    <div class="hash-arrow">→</div>
+                    <div class="hash-box" id="hv-val" style="background:#f0fdf4;border-color:#059669;">
+                        <b>Value</b><br><span style="font-size:.7rem;">"fruit"</span>
+                    </div>
+                </div>
+                <div style="text-align:center;margin-bottom:1.5rem;">
+                    <button class="btn btn-sm" onclick="animateHash()">▶ Animate Flow</button>
+                </div>
+
+                <!-- Hash Table Visual -->
+                <h4 style="margin:1.5rem 0 .8rem;">HashMap Bucket Layout (capacity=10)</h4>
+                <div class="hash-table-visual" id="hash-table">
+                    <div class="hash-slot" id="hs-0"><span class="slot-idx">0</span>—</div>
+                    <div class="hash-slot" id="hs-1"><span class="slot-idx">1</span>—</div>
+                    <div class="hash-slot" id="hs-2"><span class="slot-idx">2</span>—</div>
+                    <div class="hash-slot filled" id="hs-3"><span class="slot-idx">3</span>"apple"</div>
+                    <div class="hash-slot" id="hs-4"><span class="slot-idx">4</span>—</div>
+                    <div class="hash-slot filled" id="hs-5"><span class="slot-idx">5</span>"banana"</div>
+                    <div class="hash-slot" id="hs-6"><span class="slot-idx">6</span>—</div>
+                    <div class="hash-slot collision" id="hs-7"><span class="slot-idx">7</span>⚡ chain</div>
+                    <div class="hash-slot" id="hs-8"><span class="slot-idx">8</span>—</div>
+                    <div class="hash-slot" id="hs-9"><span class="slot-idx">9</span>—</div>
+                </div>
+                <p style="font-size:.8rem;color:var(--text-muted);text-align:center;margin-top:.6rem;">⚡ Bucket 7 shows
+                    a <b>collision</b> — multiple keys map to the same index (resolved via chaining)</p>
+
+                <!-- Collision explanation -->
+                <h4 style="margin:1.5rem 0 .8rem;">Collision Handling — Chaining</h4>
+                <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+                    <div
+                        style="border:2px solid #ca8a04;border-radius:12px;padding:12px 16px;background:#fef9c3;font-family:'JetBrains Mono';font-size:.8rem;min-width:120px;text-align:center;">
+                        <b>Bucket [7]</b><br>↓<br>Entry: "cat"<br>→ next<br>Entry: "car"<br>→ null
+                    </div>
+                    <div style="font-size:.88rem;color:var(--text-muted);padding-top:6px;max-width:400px;">
+                        When two keys hash to the same index, Java stores them as a <b>linked list</b> within the same
+                        bucket. On lookup, it scans the chain until it finds the matching key.
+                    </div>
+                </div>
+
+                <!-- Comparison -->
+                <h4 style="margin:1.5rem 0 .8rem;">HashMap vs Hashtable</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>HashMap</th>
+                            <th>Hashtable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Thread-safe</td>
+                            <td>❌ No</td>
+                            <td>✅ Yes (synchronized)</td>
+                        </tr>
+                        <tr>
+                            <td>Null keys</td>
+                            <td>✅ 1 null key allowed</td>
+                            <td>❌ Not allowed</td>
+                        </tr>
+                        <tr>
+                            <td>Performance</td>
+                            <td>⭐ Faster</td>
+                            <td>Slower (sync overhead)</td>
+                        </tr>
+                        <tr>
+                            <td>Introduced in</td>
+                            <td>Java 1.2</td>
+                            <td>Java 1.0 (Legacy)</td>
+                        </tr>
+                        <tr>
+                            <td>Use when?</td>
+                            <td>Single thread / modern code</td>
+                            <td>Legacy or multi-thread (use ConcurrentHashMap instead)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ========== MULTITHREADING ========== -->
+        <section id="threads">
+            <div class="phase-tag">§3 · Multithreading</div>
+            <div class="card">
+                <h2>3. Multithreading — Parallel Execution</h2>
+                <p>A <b>Thread</b> is a lightweight unit of execution. Java can run multiple threads concurrently —
+                    imagine multiple chefs cooking different dishes simultaneously.</p>
+                <div style="margin:1.5rem 0;">
+                    <div class="thread-bar-wrap">
+                        <div class="thread-label">🔵 Thread 1 — downloading data</div>
+                        <div class="thread-track">
+                            <div class="thread-fill" id="t1" style="background:var(--primary);"></div>
+                        </div>
+                    </div>
+                    <div class="thread-bar-wrap">
+                        <div class="thread-label">🟣 Thread 2 — processing data</div>
+                        <div class="thread-track">
+                            <div class="thread-fill" id="t2" style="background:var(--secondary);"></div>
+                        </div>
+                    </div>
+                    <div class="thread-bar-wrap">
+                        <div class="thread-label">🟢 Thread 3 — saving to disk</div>
+                        <div class="thread-track">
+                            <div class="thread-fill" id="t3" style="background:var(--accent);"></div>
+                        </div>
+                    </div>
+                    <div style="text-align:center;margin-top:1rem;">
+                        <button class="btn btn-sm" onclick="simulateThreads()">▶ Simulate Threads</button>
+                        <button class="btn btn-sm btn-outline" style="margin-left:8px;" onclick="resetThreads()">↺
+                            Reset</button>
+                    </div>
+                </div>
+                <table style="margin-top:1rem;">
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Thread</b></td>
+                            <td>Independent path of execution inside a program</td>
+                        </tr>
+                        <tr>
+                            <td><b>synchronized</b></td>
+                            <td>Prevents race conditions — only one thread at a time</td>
+                        </tr>
+                        <tr>
+                            <td><b>Runnable</b></td>
+                            <td>Interface to define a task for a thread</td>
+                        </tr>
+                        <tr>
+                            <td><b>start()</b></td>
+                            <td>Begins thread execution (not <code>run()</code> directly!)</td>
+                        </tr>
+                        <tr>
+                            <td><b>join()</b></td>
+                            <td>Wait for a thread to finish before proceeding</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ========== COMPARISONS ========== -->
+        <section id="comparisons">
+            <div class="phase-tag">§4 · Reference Comparisons</div>
+            <div class="card">
+                <h2>4. StringBuilder vs StringBuffer</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>StringBuilder</th>
+                            <th>StringBuffer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Thread-safe</td>
+                            <td>❌ No</td>
+                            <td>✅ Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Performance</td>
+                            <td>⭐ Faster (no sync)</td>
+                            <td>Slower</td>
+                        </tr>
+                        <tr>
+                            <td>Use when</td>
+                            <td>Single-threaded string manipulation</td>
+                            <td>Multi-threaded string manipulation</td>
+                        </tr>
+                        <tr>
+                            <td>Introduced</td>
+                            <td>Java 1.5</td>
+                            <td>Java 1.0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card">
+                <h2>5. Array vs Vector</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Array</th>
+                            <th>Vector</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Size</td>
+                            <td>Fixed</td>
+                            <td>Dynamic (grows automatically)</td>
+                        </tr>
+                        <tr>
+                            <td>Type</td>
+                            <td>Primitive or Object</td>
+                            <td>Objects only</td>
+                        </tr>
+                        <tr>
+                            <td>Performance</td>
+                            <td>⭐ Fast — O(1) access</td>
+                            <td>Slower (sync overhead)</td>
+                        </tr>
+                        <tr>
+                            <td>Thread-safe</td>
+                            <td>❌ No</td>
+                            <td>✅ Yes (legacy)</td>
+                        </tr>
+                        <tr>
+                            <td>Modern alternative</td>
+                            <td>—</td>
+                            <td>ArrayList (preferred)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card">
+                <h2>6. for vs. Enhanced for — Quick Reference</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Regular for</th>
+                            <th>Enhanced for-each</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Index access</td>
+                            <td>✅ Yes</td>
+                            <td>❌ No</td>
+                        </tr>
+                        <tr>
+                            <td>Modify elements</td>
+                            <td>✅ Yes</td>
+                            <td>❌ Read-only</td>
+                        </tr>
+                        <tr>
+                            <td>Readability</td>
+                            <td>Moderate</td>
+                            <td>⭐ Very clean</td>
+                        </tr>
+                        <tr>
+                            <td>Works on Collections</td>
+                            <td>Extra code needed</td>
+                            <td>✅ Directly</td>
+                        </tr>
+                        <tr>
+                            <td>Reverse traversal</td>
+                            <td>✅ Yes</td>
+                            <td>❌ Not directly</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            Java Day 3 Masterclass &bull; Page 2 of 3: Concepts &mdash;
+            <a href="Day3_Page3_LeetCode.html" style="color:var(--primary);font-weight:600;">Go to Page 3: LeetCode
+                →</a>
+        </footer>
+    </div>
+
+    <script>
+        // Hash animation
+        async function animateHash() {
+            const ids = ['hv-key', 'hv-fn', 'hv-bk', 'hv-val'];
+            ids.forEach(id => document.getElementById(id).classList.remove('highlighted'));
+            for (const id of ids) {
+                document.getElementById(id).classList.add('highlighted');
+                await new Promise(r => setTimeout(r, 700));
+                document.getElementById(id).classList.remove('highlighted');
+            }
+            document.getElementById('hs-3').style.background = '#dcfce7';
+            document.getElementById('hs-3').style.borderColor = '#059669';
+        }
+
+        // Thread simulation
+        function simulateThreads() {
+            document.getElementById('t1').style.width = '100%';
+            document.getElementById('t1').style.transition = 'width 2.5s ease';
+            setTimeout(() => { document.getElementById('t2').style.width = '100%'; document.getElementById('t2').style.transition = 'width 3.5s ease'; }, 400);
+            setTimeout(() => { document.getElementById('t3').style.width = '100%'; document.getElementById('t3').style.transition = 'width 2s ease'; }, 900);
+        }
+        function resetThreads() {
+            ['t1', 't2', 't3'].forEach(id => { document.getElementById(id).style.transition = 'none'; document.getElementById(id).style.width = '0%'; });
+        }
+
+        // Scroll spy
+        window.addEventListener('scroll', () => {
+            const dots = document.querySelectorAll('.nav-dot'); let cur = '';
+            document.querySelectorAll('section,header').forEach(s => { if (pageYOffset >= s.offsetTop - 120) cur = s.getAttribute('id'); });
+            dots.forEach(d => { d.classList.remove('active'); if (d.getAttribute('href') === '#' + cur) d.classList.add('active'); });
+        });
+    </script>
+</body>
+
+</html>

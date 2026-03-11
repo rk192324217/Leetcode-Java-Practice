@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Container With Most Water - Enhanced</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Bebas+Neue&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --primary: #4f46e5;
+            --secondary: #7c3aed;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --card-bg: #fff;
+            --border: #e2e8f0;
+            --code-bg: #1e293b;
+            --code-text: #f8fafc;
+            --water-blue: #3b82f6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Bebas Neue';
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-left: 5px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .info-box h3 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box p {
+            color: var(--text-main);
+            line-height: 1.8;
+            margin-bottom: 0.8rem;
+        }
+
+        .info-box ul {
+            margin-left: 1.5rem;
+            color: var(--text-main);
+        }
+
+        .info-box li {
+            margin-bottom: 0.5rem;
+        }
+
+        .water-container-viz {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 2px solid var(--border);
+        }
+
+        .bars-wrapper {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 0;
+            height: 350px;
+            margin-bottom: 2rem;
+            position: relative;
+            border-bottom: 4px solid #334155;
+            padding-bottom: 0;
+        }
+
+        .bar-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .bar {
+            width: 60px;
+            background: linear-gradient(to top, #cbd5e1, #e2e8f0);
+            position: relative;
+            transition: all 0.5s ease;
+            border: 2px solid #64748b;
+        }
+
+        .bar.active {
+            background: linear-gradient(to top, var(--warning), #fbbf24);
+            border-color: var(--warning);
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+            z-index: 10;
+        }
+
+        .water-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(59, 130, 246, 0.7), rgba(96, 165, 250, 0.5));
+            transition: all 0.8s ease;
+            opacity: 0;
+        }
+
+        .water-fill.show {
+            opacity: 1;
+        }
+
+        .bar-label {
+            position: absolute;
+            top: -30px;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .bar-index {
+            margin-top: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .status-display {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            border: 2px solid var(--border);
+            min-height: 80px;
+        }
+
+        .status-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .status-detail {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-pause {
+            background: linear-gradient(135deg, #f59e0b, #fb923c);
+            color: white;
+        }
+
+        .btn-pause:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .code-section {
+            background: var(--code-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 5px solid var(--primary);
+        }
+
+        .code-line {
+            color: var(--code-text);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            line-height: 1.8;
+            display: block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .code-line.active {
+            background: rgba(245, 158, 11, 0.2);
+            border-left: 4px solid var(--warning);
+            transform: translateX(5px);
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .formula {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #78350f;
+        }
+
+        @media (max-width: 768px) {
+            .bar {
+                width: 40px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌊 Container With Most Water</h1>
+            <p>LeetCode #11 - Interactive Visual Guide</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">📖 Understanding the Problem</div>
+            <div class="info-box">
+                <h3>The Water Container Analogy</h3>
+                <p><strong>Imagine:</strong> You have vertical walls at different positions with different heights. Find two walls that form a container holding the maximum water.</p>
+                
+                <p><strong>Key Points:</strong></p>
+                <ul>
+                    <li>🏗️ <strong>Water height</strong> = height of the <strong>shorter wall</strong> (water spills over!)</li>
+                    <li>📏 <strong>Width</strong> = distance between the two walls</li>
+                    <li>💧 <strong>Water Area</strong> = width × min(height[left], height[right])</li>
+                </ul>
+
+                <div class="formula-box">
+                    <div class="formula">
+                        Area = (j - i) × min(height[i], height[j])
+                    </div>
+                    <p style="margin-top: 0.5rem; color: #78350f; font-size: 0.9rem;">
+                        where i = left pointer, j = right pointer
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-box" style="background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border-left-color: var(--danger);">
+                <h3>🤔 Why Move the Shorter Wall?</h3>
+                <p><strong>If you move the taller wall:</strong></p>
+                <ul>
+                    <li>❌ Width decreases</li>
+                    <li>❌ Height still limited by shorter wall</li>
+                    <li>❌ Area can only decrease!</li>
+                </ul>
+                <p><strong>If you move the shorter wall:</strong></p>
+                <ul>
+                    <li>✅ Width decreases BUT might find taller wall</li>
+                    <li>✅ Gives a chance for larger area!</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🎮 Interactive Visualization</div>
+            <div class="water-container-viz">
+                <p style="text-align: center; color: var(--text-muted); margin-bottom: 1rem; font-size: 1.1rem;">
+                    Heights: <strong>[2, 8, 6, 2, 9]</strong>
+                </p>
+                
+                <div class="bars-wrapper" id="barsWrapper"></div>
+
+                <div class="status-display">
+                    <div class="status-text" id="statusText">Ready to start!</div>
+                    <div class="status-detail" id="statusDetail">Click "Run Algorithm" to begin.</div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="runAlgorithm()" id="runBtn">▶️ Run</button>
+                    <button class="btn btn-pause" onclick="togglePause()" id="pauseBtn" disabled>⏸️ Pause</button>
+                    <button class="btn btn-secondary" onclick="resetVisualization()">🔄 Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">💻 Java Code</div>
+            <div class="code-section">
+                <code class="code-line" id="line1">public int maxArea(int[] height) {</code>
+                <code class="code-line" id="line2">    int i = 0, j = height.length - 1;</code>
+                <code class="code-line" id="line3">    int maxArea = 0;</code>
+                <code class="code-line" id="line4">    </code>
+                <code class="code-line" id="line5">    while (i &lt; j) {</code>
+                <code class="code-line" id="line6">        int width = j - i;</code>
+                <code class="code-line" id="line7">        int minHeight = Math.min(height[i], height[j]);</code>
+                <code class="code-line" id="line8">        int area = width * minHeight;</code>
+                <code class="code-line" id="line9">        maxArea = Math.max(maxArea, area);</code>
+                <code class="code-line" id="line10">        </code>
+                <code class="code-line" id="line11">        if (height[i] &lt; height[j]) {</code>
+                <code class="code-line" id="line12">            i++;</code>
+                <code class="code-line" id="line13">        } else {</code>
+                <code class="code-line" id="line14">            j--;</code>
+                <code class="code-line" id="line15">        }</code>
+                <code class="code-line" id="line16">    }</code>
+                <code class="code-line" id="line17">    return maxArea;</code>
+                <code class="code-line" id="line18">}</code>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const heights = [2, 8, 6, 2, 9];
+        let isRunning = false;
+        let isPaused = false;
+        let pauseResolve = null;
+
+        function initBars() {
+            const wrapper = document.getElementById('barsWrapper');
+            wrapper.innerHTML = '';
+            const maxHeight = Math.max(...heights);
+            
+            heights.forEach((h, index) => {
+                const barContainer = document.createElement('div');
+                barContainer.className = 'bar-container';
+                
+                const barLabel = document.createElement('div');
+                barLabel.className = 'bar-label';
+                barLabel.textContent = h;
+                
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.id = `bar-${index}`;
+                bar.style.height = `${(h / maxHeight) * 300}px`;
+                
+                const waterFill = document.createElement('div');
+                waterFill.className = 'water-fill';
+                waterFill.id = `water-${index}`;
+                
+                const barIndex = document.createElement('div');
+                barIndex.className = 'bar-index';
+                barIndex.textContent = `[${index}]`;
+                
+                bar.appendChild(waterFill);
+                barContainer.appendChild(barLabel);
+                barContainer.appendChild(bar);
+                barContainer.appendChild(barIndex);
+                wrapper.appendChild(barContainer);
+            });
+        }
+
+        async function highlightLine(lineId, duration = 600) {
+            const line = document.getElementById(lineId);
+            if (line) {
+                line.classList.add('active');
+                await sleep(duration);
+                line.classList.remove('active');
+            }
+        }
+
+        async function sleep(ms) {
+            await new Promise(resolve => setTimeout(resolve, ms));
+            if (isPaused) {
+                await new Promise(resolve => pauseResolve = resolve);
+            }
+        }
+
+        function togglePause() {
+            isPaused = !isPaused;
+            const btn = document.getElementById('pauseBtn');
+            if (isPaused) {
+                btn.textContent = '▶️ Resume';
+                btn.style.background = 'linear-gradient(135deg, #10b981, #34d399)';
+            } else {
+                btn.textContent = '⏸️ Pause';
+                btn.style.background = 'linear-gradient(135deg, #f59e0b, #fb923c)';
+                if (pauseResolve) {
+                    pauseResolve();
+                    pauseResolve = null;
+                }
+            }
+        }
+
+        async function runAlgorithm() {
+            if (isRunning) return;
+            isRunning = true;
+            isPaused = false;
+            document.getElementById('runBtn').disabled = true;
+            document.getElementById('pauseBtn').disabled = false;
+            document.getElementById('pauseBtn').textContent = '⏸️ Pause';
+            document.getElementById('pauseBtn').style.background = 'linear-gradient(135deg, #f59e0b, #fb923c)';
+            resetVisualization();
+            
+            let i = 0;
+            let j = heights.length - 1;
+            let maxArea = 0;
+            
+            await highlightLine('line1');
+            await highlightLine('line2');
+            await highlightLine('line3');
+            
+            while (i < j) {
+                await highlightLine('line5');
+                
+                document.querySelectorAll('.bar').forEach(bar => bar.classList.remove('active'));
+                document.getElementById(`bar-${i}`).classList.add('active');
+                document.getElementById(`bar-${j}`).classList.add('active');
+                
+                await highlightLine('line6');
+                const width = j - i;
+                
+                await highlightLine('line7');
+                const minHeight = Math.min(heights[i], heights[j]);
+                
+                await highlightLine('line8');
+                const area = width * minHeight;
+                
+                const maxH = Math.max(...heights);
+                for (let k = i; k <= j; k++) {
+                    const waterEl = document.getElementById(`water-${k}`);
+                    waterEl.style.height = `${(minHeight / maxH) * 300}px`;
+                    waterEl.classList.add('show');
+                }
+                
+                await sleep(800);
+                
+                await highlightLine('line9');
+                if (area > maxArea) {
+                    maxArea = area;
+                }
+                
+                document.getElementById('statusText').textContent = 
+                    `Left[${i}]=${heights[i]}, Right[${j}]=${heights[j]} → Area = ${width} × ${minHeight} = ${area}`;
+                document.getElementById('statusDetail').textContent = 
+                    `Max Area so far: ${maxArea}`;
+                
+                await sleep(800);
+                
+                for (let k = i; k <= j; k++) {
+                    document.getElementById(`water-${k}`).classList.remove('show');
+                }
+                
+                await highlightLine('line11');
+                if (heights[i] < heights[j]) {
+                    await highlightLine('line12');
+                    document.getElementById('statusDetail').textContent = 
+                        `Moving left pointer (${heights[i]} < ${heights[j]})`;
+                    await sleep(600);
+                    i++;
+                } else {
+                    await highlightLine('line13');
+                    await highlightLine('line14');
+                    document.getElementById('statusDetail').textContent = 
+                        `Moving right pointer (${heights[i]} ≥ ${heights[j]})`;
+                    await sleep(600);
+                    j--;
+                }
+            }
+            
+            await highlightLine('line17');
+            document.querySelectorAll('.bar').forEach(bar => bar.classList.remove('active'));
+            document.getElementById('statusText').textContent = `✅ Maximum Water Area = ${maxArea}`;
+            document.getElementById('statusDetail').textContent = 'Algorithm completed!';
+            
+            isRunning = false;
+            isPaused = false;
+            document.getElementById('runBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+        }
+
+        function resetVisualization() {
+            document.querySelectorAll('.bar').forEach(bar => bar.classList.remove('active'));
+            document.querySelectorAll('.water-fill').forEach(water => {
+                water.classList.remove('show');
+                water.style.height = '0px';
+            });
+            document.querySelectorAll('.code-line').forEach(line => line.classList.remove('active'));
+            document.getElementById('statusText').textContent = 'Ready to start!';
+            document.getElementById('statusDetail').textContent = 'Click "Run Algorithm" to begin.';
+            isPaused = false;
+            if (pauseResolve) {
+                pauseResolve();
+                pauseResolve = null;
+            }
+        }
+
+        window.onload = initBars;
+    </script>
+</body>
+</html>

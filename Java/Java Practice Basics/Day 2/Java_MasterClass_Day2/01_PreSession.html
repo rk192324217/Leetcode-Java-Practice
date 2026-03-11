@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Bebas+Neue&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --bg: #f8fafc; --primary: #4f46e5; --secondary: #9333ea; --accent: #06b6d4;
+    --text-main: #0f172a; --text-muted: #475569; --card-bg: #ffffff;
+    --border: #e2e8f0; --highlight-bg: #fef08a; --code-bg: #f1f5f9;
+}
+body { background-color: var(--bg); color: var(--text-main); font-family: 'Outfit', sans-serif; margin: 0; padding: 1.5rem; line-height: 1.6; }
+.container { max-width: 1400px; margin: 0 auto; }
+.header-title { font-size: 2.8rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 2rem; font-family: 'Bebas Neue'; }
+.card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: 0.3s; }
+.card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+.btn { padding: 0.6rem 1.2rem; border-radius: 50px; text-decoration: none; font-weight: 600; background: var(--card-bg); color: var(--primary); border: 2px solid var(--primary); cursor: pointer; transition: 0.2s; display: inline-block; font-size: 0.8rem;}
+.btn:hover { background: var(--primary); color: white; transform: translateY(-2px); }
+.try-btn { padding: 6px 14px; font-size: 0.85rem; background: var(--primary); color: white; border-radius: 6px; text-decoration: none; display: inline-block; margin-top: 8px; font-weight: 600; border:none; cursor:pointer; }
+.try-btn:hover { background: var(--secondary); transform: scale(1.05); }
+pre { background: var(--code-bg); padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: 'JetBrains Mono'; font-size: 0.85rem; border: 1px solid var(--border); border-left: 4px solid var(--primary); color: #1e293b; }
+.top-nav { display: flex; gap: 5px; margin-bottom: 2rem; justify-content: center; flex-wrap: wrap; }
+.scroll-pane::-webkit-scrollbar { width: 8px; }
+.scroll-pane::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; border-radius: 8px; overflow: hidden; }
+th, td { border: 1px solid var(--border); padding: 12px; text-align: left; }
+th { background: #f1f5f9; font-weight: 800; color: var(--primary); }
+.quiz-opt { width: 100%; text-align: left; padding: 12px; background: #f8fafc; border: 1px solid var(--border); margin: 5px 0; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 600; }
+.quiz-opt:hover { background: #eef2ff; border-color: var(--primary); }
+</style>
+</head>
+<body>
+    <div class="container">
+        
+    <div class="top-nav">
+        <a href="00_Index.html" class="btn">🏠 Home</a>
+        <a href="01_PreSession.html" class="btn">🔭 01</a>
+        <a href="02_Concept_Loops.html" class="btn">📖 02</a>
+        <a href="03_Activity.html" class="btn">⚡ 03</a>
+        <a href="04_FillBlanks.html" class="btn">✏️ 04</a>
+        <a href="05_Exploration.html" class="btn">🔍 05</a>
+    <a href="06_LeetCode.html" class="btn">🧩 06</a>
+        <a href="08_ClassQuiz.html" class="btn">🏆 08</a>
+        <a href="13_Revision_Recall.html" class="btn">🧠 13</a>
+        <a href="14_Code_Listing.html" class="btn">📄 14</a>
+    </div>
+    
+        <h1 class="header-title">🔭 Step 01: Preparation</h1>
+        <div class="card"><h3>🔍 Thinking Cap</h3><p>Today we dive into Loops & Control. Before we start, ask yourself: How does the computer remember your age vs your name? What's the difference in memory?</p></div>
+    </div>
+    <script></script>
+</body>
+</html>

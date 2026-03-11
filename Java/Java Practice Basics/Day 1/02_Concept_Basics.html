@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Bebas+Neue&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --bg: #f8fafc; --primary: #4f46e5; --secondary: #9333ea; --accent: #06b6d4;
+    --text-main: #0f172a; --text-muted: #475569; --card-bg: #ffffff;
+    --border: #e2e8f0; --highlight-bg: #fef08a; --code-bg: #f1f5f9;
+}
+body { background-color: var(--bg); color: var(--text-main); font-family: 'Outfit', sans-serif; margin: 0; padding: 1.5rem; line-height: 1.6; }
+.container { max-width: 1400px; margin: 0 auto; }
+.header-title { font-size: 2.8rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 2rem; font-family: 'Bebas Neue'; }
+.card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: 0.3s; }
+.card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+.btn { padding: 0.6rem 1.2rem; border-radius: 50px; text-decoration: none; font-weight: 600; background: var(--card-bg); color: var(--primary); border: 2px solid var(--primary); cursor: pointer; transition: 0.2s; display: inline-block; font-size: 0.8rem;}
+.btn:hover { background: var(--primary); color: white; transform: translateY(-2px); }
+.try-btn { padding: 6px 14px; font-size: 0.85rem; background: var(--primary); color: white; border-radius: 6px; text-decoration: none; display: inline-block; margin-top: 8px; font-weight: 600; border:none; cursor:pointer; }
+.try-btn:hover { background: var(--secondary); transform: scale(1.05); }
+pre { background: var(--code-bg); padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: 'JetBrains Mono'; font-size: 0.85rem; border: 1px solid var(--border); border-left: 4px solid var(--primary); color: #1e293b; }
+.top-nav { display: flex; gap: 5px; margin-bottom: 2rem; justify-content: center; flex-wrap: wrap; }
+.scroll-pane::-webkit-scrollbar { width: 8px; }
+.scroll-pane::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; border-radius: 8px; overflow: hidden; }
+th, td { border: 1px solid var(--border); padding: 12px; text-align: left; }
+th { background: #f1f5f9; font-weight: 800; color: var(--primary); }
+.quiz-opt { width: 100%; text-align: left; padding: 12px; background: #f8fafc; border: 1px solid var(--border); margin: 5px 0; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 600; }
+.quiz-opt:hover { background: #eef2ff; border-color: var(--primary); }
+</style>
+</head>
+<body>
+    <div class="container">
+        
+    <div class="top-nav">
+        <a href="00_Index.html" class="btn">🏠 Home</a>
+        <a href="01_PreSession.html" class="btn">🔭 01</a>
+        <a href="02_Concept_Basics.html" class="btn">📖 02</a>
+        <a href="03_Activity.html" class="btn">⚡ 03</a>
+        <a href="04_FillBlanks.html" class="btn">✏️ 04</a>
+        <a href="05_Exploration.html" class="btn">🔍 05</a>
+    <a href="06_LeetCode.html" class="btn" style="opacity:0.5;">🧩 06</a>
+        <a href="07_Practice.html" class="btn">📝 07</a>
+        <a href="08_ClassQuiz.html" class="btn">🏆 08</a>
+        <a href="09_IndividualQuiz.html" class="btn">🎯 09</a>
+        <a href="10_Certificate.html" class="btn">🥇 10</a>
+        <a href="11_NextLevel.html" class="btn">🚀 11</a>
+        <a href="12_Bonus.html" class="btn">🎁 12</a>
+        <a href="13_Revision_Recall.html" class="btn">🧠 13</a>
+        <a href="14_Code_Listing.html" class="btn">📄 14</a>
+    </div>
+    
+        <h1 class="header-title">Step 02: Concept Masterclass</h1>
+        <div style="display:flex; gap:2rem;"><div style="flex:1; max-height:80vh; overflow-y:auto;" class="scroll-pane"><h2>📖 Theory</h2><div class="card" id="topic-0"><h3>1. Java Ecosystem & Setup</h3><p style="font-size:1rem; color:var(--text-muted);">Welcome to Java!
+            <h4>The Big Three</h4>
+            <ul>
+                <li><b>JDK (Java Development Kit)</b>: The toolbox for developers. Includes 'javac' (compiler) and 'java' (runner).</li>
+                <li><b>JRE (Java Runtime Environment)</b>: The library needed to run Java programs.</li>
+                <li><b>JVM (Java Virtual Machine)</b>: The engine that executes bytecode. "Write Once, Run Anywhere!"</li>
+            </ul>
+            <h4>IntelliJ IDEA Setup</h4>
+            <ol>
+                <li>Install <b>JDK 17</b>.</li>
+                <li>Download <b>IntelliJ IDEA Community</b>.</li>
+                <li>Create a <code>New Project</code> and write your first <code>Main</code> class.</li>
+            </ol>
+            <h4>Compile vs Run</h4>
+            <p><code>javac Hello.java</code> -> Generates <code>Hello.class</code> (Bytecode)<br>
+            <code>java Hello</code> -> JVM runs the bytecode!</p></p><div id="vBox" style="width:100px; height:40px; border:2px solid; margin:10px auto; text-align:center; display:flex; align-items:center; justify-content:center;">Empty</div><button id="vA" class="try-btn" style="width:100%;">int age = 18;</button></div><div class="card" id="topic-1"><h3>2. Variables & Data Types</h3><p style="font-size:1rem; color:var(--text-muted);">Java's core building blocks.
+            <table>
+                <tr><th>Category</th><th>Types</th><th>Size (bits)</th></tr>
+                <tr><td>Integer</td><td>byte, short, <b>int</b>, <b>long</b></td><td>8, 16, 32, 64</td></tr>
+                <tr><td>Decimal</td><td>float, <b>double</b></td><td>32, 64</td></tr>
+                <tr><td>Logic</td><td><b>boolean</b></td><td>1</td></tr>
+                <tr><td>Text (Char)</td><td><b>char</b></td><td>16 (Unicode)</td></tr>
+            </table>
+            <h4>📥 User Input (Scanner)</h4>
+            <p>Use <code>import java.util.Scanner;</code> to read data.<br>
+            <code>Scanner sc = new Scanner(System.in);</code><br>
+            <code>sc.next()</code> (String), <code>sc.nextInt()</code> (Integer), <code>sc.nextDouble()</code> (Decimal).</p></p><div id="castBox" style="border:2px dashed var(--accent); padding:10px; border-radius:8px; text-align:center; margin:10px 0;">
+                <div id="cOut" style="font-size:1.2rem; font-weight:bold; margin-bottom:10px;">Select a Cast</div>
+                <div style="display:flex; justify-content:center; gap:10px; margin-bottom:10px;">
+                    <div style="border:1px solid #ddd; padding:5px; border-radius:4px;">Char: <span id="charVal" style="color:var(--primary); font-weight:bold;">'A'</span></div>
+                    <div style="border:1px solid #ddd; padding:5px; border-radius:4px;">Int: <span id="intVal" style="color:var(--secondary); font-weight:bold;">?</span></div>
+                </div>
+                <button id="cN" class="try-btn" style="margin:2px;">(int) 9.99</button>
+                <button id="cC" class="try-btn" style="margin:2px;">(int) 'A'</button>
+            </div></div><div class="card" id="topic-2"><h3>3. Casting & Char Conversion</h3><p style="font-size:1rem; color:var(--text-muted);">Explicit casting <code>(int)</code> cuts precision. Characters are secretly numbers! Casting <code>'A'</code> to <code>int</code> gives its code (65).</p><div style="font-family:monospace; text-align:center;">7 (0111) & 1 (0001) = <span id="bitR">?</span></div><button id="bitA" class="try-btn" style="width:100%;">Run Odd? Check</button></div><div class="card" id="topic-3"><h3>4. Operators Masterclass</h3><p style="font-size:1rem; color:var(--text-muted);">Standard math and logic.
+            <h4>Arithmetic Operators</h4>
+            <table>
+                <tr><th>Op</th><th>Name</th><th>Example (a=10, b=5)</th></tr>
+                <tr><td>+</td><td>Addition</td><td>a + b = 15</td></tr>
+                <tr><td>-</td><td>Subtraction</td><td>a - b = 5</td></tr>
+                <tr><td>*</td><td>Multiplication</td><td>a * b = 50</td></tr>
+                <tr><td>/</td><td>Division</td><td>a / b = 2</td></tr>
+                <tr><td>%</td><td>Modulo</td><td>a % b = 0</td></tr>
+            </table>
+            <h4>Relational Operators</h4>
+            <table>
+                <tr><th>Op</th><th>Effect</th><th>Example (a=10, b=5)</th></tr>
+                <tr><td>==</td><td>Equal to</td><td>a == b is false</td></tr>
+                <tr><td>!=</td><td>Not equal</td><td>a != b is true</td></tr>
+                <tr><td>&gt;</td><td>Greater than</td><td>a &gt; b is true</td></tr>
+                <tr><td>&lt;</td><td>Less than</td><td>a &lt; b is false</td></tr>
+            </table>
+            <h4>Logical Operators</h4>
+            <table>
+                <tr><th>Op</th><th>Name</th><th>Effect</th></tr>
+                <tr><td>&&</td><td>Logical AND</td><td>True if both true</td></tr>
+                <tr><td>||</td><td>Logical OR</td><td>True if either true</td></tr>
+                <tr><td>!</td><td>Logical NOT</td><td>Inverts truth</td></tr>
+            </table>
+            <h4>Bitwise Operators (Low-Level)</h4>
+            <table>
+                <tr><th>Op</th><th>Name</th><th>Effect</th></tr>
+                <tr><td>&</td><td>AND</td><td>Bits both 1 -> 1</td></tr>
+                <tr><td>|</td><td>OR</td><td>Either bit 1 -> 1</td></tr>
+                <tr><td>^</td><td>XOR</td><td>Bits different -> 1</td></tr>
+                <tr><td>~</td><td>NOT</td><td>Invert bits</td></tr>
+                <tr><td><<</td><td>L-Shift</td><td>Multiply by 2</td></tr>
+                <tr><td>>></td><td>R-Shift</td><td>Divide by 2</td></tr>
+            </table>
+            <h4>Truth Table (&)</h4>
+            <table style="width:auto; margin:10px 0;">
+                <tr><th>A</th><th>B</th><th>A & B</th></tr>
+                <tr><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>0</td><td>1</td><td>0</td></tr>
+                <tr><td>1</td><td>0</td><td>0</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td></tr>
+            </table>
+            <span style='color:var(--secondary);'><b>Pro Tip:</b></span> Use <code>(n & 1) == 1</code> to check if a number is Odd in 1 CPU cycle!</p></div><div class="card" id="topic-4"><h3>5. Conditionals & Logic Gates</h3><p style="font-size:1rem; color:var(--text-muted);">
+            <b>IF Template:</b>
+            <pre>if (condition) {
+    // True Path
+} else {
+    // False Path
+}</pre>
+            <h4>🏅 The Leap Year Rule</h4>
+            <ul style="list-style:none; padding-left:0;">
+                <li>1️⃣ <b>Divisible by 4</b> → Normally a leap year.</li>
+                <li>2️⃣ <b>But NOT by 100</b> → Then it is NOT a leap year.</li>
+                <li>3️⃣ <b>Exception: Divisible by 400</b> → It IS a leap year again!</li>
+            </ul>
+            <b>Logical Formula:</b> <code>(y%4==0 && y%100!=0) || (y%400==0)</code>
+            </p></div></div><div style="flex:1; max-height:80vh; overflow-y:auto;" class="scroll-pane"><h2>💻 Practicum</h2><div class="card" style="border-left: 5px solid var(--secondary);"><h4>🔹 01: Hello World</h4><pre>public class MainClass {
+  public static void main(String[] args) {
+    System.out.println("Hello World! Java 17 Ready.");
+  }
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20System.out.println%28%22Hello%20World%21%20Java%2017%20Ready.%22%29%3B%0A%20%20%7D%0A%7D&mode=edit" target="_blank" class="try-btn">🚀 Try It</a></div><div class="card" style="border-left: 5px solid var(--secondary);"><h4>🔹 02: Personal Bio</h4><pre>public class MainClass {
+  public static void main(String[] args) {
+    System.out.println("Name: Java Student");
+    System.out.println("Age: 20");
+    System.out.println("City: Bangalore");
+  }
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20System.out.println%28%22Name%3A%20Java%20Student%22%29%3B%0A%20%20%20%20System.out.println%28%22Age%3A%2020%22%29%3B%0A%20%20%20%20System.out.println%28%22City%3A%20Bangalore%22%29%3B%0A%20%20%7D%0A%7D&mode=edit" target="_blank" class="try-btn">🚀 Try It</a></div><div class="card" style="border-left: 5px solid var(--secondary);"><h4>🔹 03: Primitive Showcase</h4><pre>public class MainClass {
+  public static void main(String[] args) {
+    int a = 10; double b = 20.5; char c = 'A'; boolean d = true;
+    System.out.println(a + " " + b + " " + c + " " + d);
+  }
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20int%20a%20%3D%2010%3B%20double%20b%20%3D%2020.5%3B%20char%20c%20%3D%20%27A%27%3B%20boolean%20d%20%3D%20true%3B%0A%20%20%20%20System.out.println%28a%20%2B%20%22%20%22%20%2B%20b%20%2B%20%22%20%22%20%2B%20c%20%2B%20%22%20%22%20%2B%20d%29%3B%0A%20%20%7D%0A%7D&mode=edit" target="_blank" class="try-btn">🚀 Try It</a></div><div class="card" style="border-left: 5px solid var(--secondary);"><h4>🔹 04: Type Casting</h4><pre>public class MainClass {
+  public static void main(String[] args) {
+    double d = 9.99; int i = (int)d;
+    int x = 10; double y = x;
+    System.out.println("Explicit: " + i + ", Implicit: " + y);
+  }
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20double%20d%20%3D%209.99%3B%20int%20i%20%3D%20%28int%29d%3B%0A%20%20%20%20int%20x%20%3D%2010%3B%20double%20y%20%3D%20x%3B%0A%20%20%20%20System.out.println%28%22Explicit%3A%20%22%20%2B%20i%20%2B%20%22%2C%20Implicit%3A%20%22%20%2B%20y%29%3B%0A%20%20%7D%0A%7D&mode=edit" target="_blank" class="try-btn">🚀 Try It</a></div><div class="card" style="border-left: 5px solid var(--secondary);"><h4>🔹 05: User Input (Scanner)</h4><pre>import java.util.Scanner;
+public class MainClass {
+  public static void main(String[] args) {
+    Scanner sc = new Scanner("John 20 95.5");
+    String name = sc.next(); int age = sc.nextInt(); double marks = sc.nextDouble();
+    System.out.println(name + " is " + age + " with marks: " + marks);
+  }
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=import%20java.util.Scanner%3B%0Apublic%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20Scanner%20sc%20%3D%20new%20Scanner%28%22John%2020%2095.5%22%29%3B%0A%20%20%20%20String%20name%20%3D%20sc.next%28%29%3B%20int%20age%20%3D%20sc.nextInt%28%29%3B%20double%20marks%20%3D%20sc.nextDouble%28%29%3B%0A%20%20%20%20System.out.println%28name%20%2B%20%22%20is%20%22%20%2B%20age%20%2B%20%22%20with%20marks%3A%20%22%20%2B%20marks%29%3B%0A%20%20%7D%0A%7D&mode=edit" target="_blank" class="try-btn">🚀 Try It</a></div><div class="card" style="border-left: 5px solid var(--secondary);"><h4>🔹 06: Basic Calculator</h4><pre>public class MainClass {
+  public static void main(String[] args) {
+    int a=10, b=5;
+    System.out.println("Add: " + (a+b) + ", Sub: " + (a-b) + ", Mul: " + (a*b) + ", Div: " + (a/b));
+  }
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20int%20a%3D10%2C%20b%3D5%3B%0A%20%20%20%20System.out.println%28%22Add%3A%20%22%20%2B%20%28a%2Bb%29%20%2B%20%22%2C%20Sub%3A%20%22%20%2B%20%28a-b%29%20%2B%20%22%2C%20Mul%3A%20%22%20%2B%20%28a%2Ab%29%20%2B%20%22%2C%20Div%3A%20%22%20%2B%20%28a/b%29%29%3B%0A%20%20%7D%0A%7D&mode=edit" target="_blank" class="try-btn">🚀 Try It</a></div><div class="card" style="border-left: 5px solid var(--secondary);"><h4>🔹 07: Bitwise Odd/Even</h4><pre>public class MainClass {
+  public static void main(String[] args) {
+    int n = 7;
+    if((n & 1) == 1) System.out.println("Odd");
+    else System.out.println("Even");
+  }
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20int%20n%20%3D%207%3B%0A%20%20%20%20if%28%28n%20%26%201%29%20%3D%3D%201%29%20System.out.println%28%22Odd%22%29%3B%0A%20%20%20%20else%20System.out.println%28%22Even%22%29%3B%0A%20%20%7D%0A%7D&mode=edit" target="_blank" class="try-btn">🚀 Try It</a></div><div class="card" style="border-left: 5px solid var(--secondary);"><h4>🔹 08: Max of Three (Ternary)</h4><pre>public class MainClass {
+  public static void main(String[] args) {
+    int a=10, b=20, c=15;
+    int max = (a > b) ? (a > c ? a : c) : (b > c ? b : c);
+    System.out.println("Max is: " + max);
+  }
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20int%20a%3D10%2C%20b%3D20%2C%20c%3D15%3B%0A%20%20%20%20int%20max%20%3D%20%28a%20%3E%20b%29%20%3F%20%28a%20%3E%20c%20%3F%20a%20%3A%20c%29%20%3A%20%28b%20%3E%20c%20%3F%20b%20%3A%20c%29%3B%0A%20%20%20%20System.out.println%28%22Max%20is%3A%20%22%20%2B%20max%29%3B%0A%20%20%7D%0A%7D&mode=edit" target="_blank" class="try-btn">🚀 Try It</a></div><div class="card" style="border-left: 5px solid var(--secondary);"><h4>🔹 09: Leap Year Check</h4><pre>public class MainClass {
+  public static void main(String[] args) {
+    int year = 2024;
+    boolean leap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    System.out.println("Is Leap: " + leap);
+  }
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20int%20year%20%3D%202024%3B%0A%20%20%20%20boolean%20leap%20%3D%20%28year%20%25%204%20%3D%3D%200%20%26%26%20year%20%25%20100%20%21%3D%200%29%20%7C%7C%20%28year%20%25%20400%20%3D%3D%200%29%3B%0A%20%20%20%20System.out.println%28%22Is%20Leap%3A%20%22%20%2B%20leap%29%3B%0A%20%20%7D%0A%7D&mode=edit" target="_blank" class="try-btn">🚀 Try It</a></div><div class="card" style="border-left: 5px solid var(--secondary);"><h4>🔹 10: Grade Calculator</h4><pre>public class MainClass {
+  public static void main(String[] args) {
+    int m = 85;
+    if(m>=90) System.out.println("A");
+    else if(m>=80) System.out.println("B");
+    else System.out.println("F");
+  }
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20int%20m%20%3D%2085%3B%0A%20%20%20%20if%28m%3E%3D90%29%20System.out.println%28%22A%22%29%3B%0A%20%20%20%20else%20if%28m%3E%3D80%29%20System.out.println%28%22B%22%29%3B%0A%20%20%20%20else%20System.out.println%28%22F%22%29%3B%0A%20%20%7D%0A%7D&mode=edit" target="_blank" class="try-btn">🚀 Try It</a></div><div class="card" style="border-left: 5px solid var(--secondary);"><h4>🔹 11: Day from Number</h4><pre>public class MainClass {
+  public static void main(String[] args) {
+    int day = 3;
+    switch(day) {
+      case 1: System.out.println("Mon"); break;
+      case 3: System.out.println("Wed"); break;
+      default: System.out.println("Other");
+    }
+  }
+}</pre><a href="https://pythontutor.com/java.html?py=java&cumulative=false#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20int%20day%20%3D%203%3B%0A%20%20%20%20switch%28day%29%20%7B%0A%20%20%20%20%20%20case%201%3A%20System.out.println%28%22Mon%22%29%3B%20break%3B%0A%20%20%20%20%20%20case%203%3A%20System.out.println%28%22Wed%22%29%3B%20break%3B%0A%20%20%20%20%20%20default%3A%20System.out.println%28%22Other%22%29%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D&mode=edit" target="_blank" class="try-btn">🚀 Try It</a></div></div></div>
+    </div>
+    <script>document.getElementById('vA').addEventListener('click',()=>{ const b=document.getElementById('vBox'); b.innerText='18'; b.style.background='#fef08a'; });
+
+                document.getElementById('cN').addEventListener('click', ()=>{ 
+                    document.getElementById('cOut').innerText = 'Narrowing: 9.99 -> 9'; 
+                    document.getElementById('intVal').innerText = '9';
+                    document.getElementById('charVal').innerText = '-';
+                });
+                document.getElementById('cC').addEventListener('click', ()=>{ 
+                    document.getElementById('cOut').innerText = "Character to ASCII"; 
+                    document.getElementById('intVal').innerText = '65';
+                    document.getElementById('charVal').innerText = "'A'";
+                });
+            
+document.getElementById('bitA').addEventListener('click',()=>{ document.getElementById('bitR').innerText='1 (ODD)'; document.getElementById('bitR').style.color='#ef4444'; });
+
+
+</script>
+</body>
+</html>

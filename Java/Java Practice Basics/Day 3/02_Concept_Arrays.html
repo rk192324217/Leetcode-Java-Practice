@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step 02: Arrays Concept</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Bebas+Neue&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --primary: #4f46e5;
+            --secondary: #7c3aed;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --card-bg: #fff;
+            --border: #e2e8f0;
+            --code-bg: #1e293b;
+            --code-text: #f8fafc;
+            --hl-line: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.7;
+            padding: 1.5rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            font-size: 2.8rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-family: 'Bebas Neue';
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, .05);
+            transition: .3s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, .1);
+        }
+
+        .btn {
+            padding: .5rem 1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            background: var(--card-bg);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            transition: .2s;
+            display: inline-block;
+            font-size: .78rem;
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .try-btn {
+            padding: 6px 14px;
+            font-size: .82rem;
+            background: linear-gradient(135deg, #2563eb, var(--secondary));
+            color: #fff;
+            border-radius: 20px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .try-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .top-nav {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        pre {
+            background: var(--code-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono';
+            font-size: .82rem;
+            border-left: 4px solid var(--primary);
+            color: var(--code-text);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: .88rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border);
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #f1f5f9;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* Array Viz */
+        .algo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.2rem;
+        }
+
+        @media(max-width:768px) {
+            .algo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .viz-area {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px dashed var(--border);
+        }
+
+        .mem-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .mem-unit {
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: #fff;
+            font-weight: 700;
+            transition: .4s;
+            font-size: .9rem;
+            position: relative;
+        }
+
+        .mem-unit.active {
+            border-color: var(--hl-line);
+            background: #fef9c3;
+            transform: scale(1.15);
+            box-shadow: 0 0 12px rgba(245, 158, 11, .4);
+        }
+
+        .idx-label {
+            font-size: .6rem;
+            position: absolute;
+            top: -16px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono';
+        }
+
+        .addr-label {
+            font-size: .55rem;
+            position: absolute;
+            bottom: -16px;
+            color: var(--secondary);
+            font-family: 'JetBrains Mono';
+            font-weight: 700;
+        }
+
+        .code-container {
+            background: var(--code-bg);
+            border-radius: 12px;
+            padding: 1.2rem;
+            font-family: 'JetBrains Mono';
+            font-size: .8rem;
+            color: var(--code-text);
+            line-height: 2;
+            overflow-x: auto;
+            border-left: 5px solid var(--primary);
+        }
+
+        .code-line {
+            display: block;
+            padding: 1px 5px;
+            border-radius: 4px;
+            transition: .3s;
+        }
+
+        .code-line.active {
+            background: var(--hl-line);
+            color: #0f172a;
+            font-weight: 700;
+            box-shadow: 0 0 8px rgba(245, 158, 11, .4);
+        }
+
+        .btn-sim {
+            padding: .55rem 1.2rem;
+            border-radius: 10px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: .82rem;
+            transition: .3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-sim:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, .35);
+        }
+
+        .btn-sim:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-reset {
+            padding: .55rem 1.2rem;
+            border-radius: 10px;
+            background: #fff;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: .82rem;
+            transition: .2s;
+        }
+
+        .btn-reset:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .access-result {
+            margin-top: .8rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: .95rem;
+            min-height: 1.4rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="top-nav">
+            <a href="00_Index.html" class="btn">🏠 Home</a>
+            <a href="01_PreSession.html" class="btn">🔭 01</a>
+            <a href="02_Concept_Arrays.html" class="btn" style="background:var(--primary);color:#fff;">📖 02</a>
+            <a href="03_Activity.html" class="btn">⚡ 03</a>
+            <a href="04_FillBlanks.html" class="btn">✏️ 04</a>
+            <a href="05_Exploration.html" class="btn">🔍 05</a>
+            <a href="06_LeetCode.html" class="btn">🧩 06</a>
+            <a href="08_ClassQuiz.html" class="btn">🏆 08</a>
+            <a href="13_Revision_Recall.html" class="btn">🧠 13</a>
+            <a href="14_Code_Listing.html" class="btn">📄 14</a>
+        </div>
+
+        <h1 class="header-title">Step 02: Arrays — Concept Masterclass</h1>
+
+        <div style="display:flex;gap:1.5rem;flex-wrap:wrap;">
+            <!-- LEFT: Theory -->
+            <div style="flex:1;min-width:320px;">
+                <h2 style="margin-bottom:1rem;">📖 Theory</h2>
+
+                <!-- 1. Array Visual + Parallel Code -->
+                <div class="card" style="border-left:4px solid var(--primary);">
+                    <h3>1. 🗂️ Array — Memory Grid &amp; Access</h3>
+                    <p style="color:var(--text-muted);font-size:.92rem;">Arrays are <b>contiguous blocks</b> in memory.
+                        Each element is accessed instantly via its <b>index</b>.</p>
+
+                    <div class="algo-grid">
+                        <div class="viz-area">
+                            <p style="font-size:.78rem;color:var(--text-muted);margin-bottom:.8rem;">int[] marks = {85,
+                                92, 78, 96, 88}</p>
+                            <div class="mem-row" id="arr-viz">
+                                <div class="mem-unit" id="a-0"><span class="idx-label">[0]</span>85<span
+                                        class="addr-label">4096</span></div>
+                                <div class="mem-unit" id="a-1"><span class="idx-label">[1]</span>92<span
+                                        class="addr-label">4100</span></div>
+                                <div class="mem-unit" id="a-2"><span class="idx-label">[2]</span>78<span
+                                        class="addr-label">4104</span></div>
+                                <div class="mem-unit" id="a-3"><span class="idx-label">[3]</span>96<span
+                                        class="addr-label">4108</span></div>
+                                <div class="mem-unit" id="a-4"><span class="idx-label">[4]</span>88<span
+                                        class="addr-label">4112</span></div>
+                            </div>
+                            <div style="display:flex;align-items:center;gap:8px;margin-top:1rem;">
+                                <label style="font-weight:600;font-size:.85rem;">Access index:</label>
+                                <input type="number" id="acc-idx" value="3" min="0" max="4"
+                                    style="width:50px;padding:5px;border-radius:6px;border:1px solid var(--border);font-size:.88rem;">
+                                <button class="btn-sim" onclick="accessArray()">🎯 Access</button>
+                                <button class="btn-reset" onclick="resetArray()">↺</button>
+                            </div>
+                            <div id="acc-result" class="access-result">→ Click Access to read an element</div>
+                        </div>
+                        <div class="code-container" id="code-acc">
+                            <span class="code-line" id="ac-l1">int[] marks = {85,92,78,96,88};</span>
+                            <span class="code-line" id="ac-l2">int idx = <span id="idx-val">3</span>;</span>
+                            <span class="code-line" id="ac-l3">// Jump directly to memory slot</span>
+                            <span class="code-line" id="ac-l4">int value = marks[idx];</span>
+                            <span class="code-line" id="ac-l5">System.out.println(value);</span>
+                            <span class="code-line" id="ac-l6">// → <span id="out-val">96</span></span>
+                        </div>
+                    </div>
+                    <a href="https://pythontutor.com/java.html#code=public%20class%20Main%7Bpublic%20static%20void%20main(String[]%20args)%7Bint[]%20m%3D%7B85%2C92%2C78%2C96%2C88%7D%3Bfor(int%20i%3D0%3Bi%3Cm.length%3Bi%2B%2B)System.out.println(%22marks%5B%22%2Bi%2B%22%5D%3D%22%2Bm%5Bi%5D)%3B%7D%7D"
+                        target="_blank" class="try-btn">🚀 Try It Yourself</a>
+                </div>
+
+                <!-- 2. Champion Belt -->
+                <div class="card">
+                    <h3>2. 🏆 Champion Belt (Min/Max)</h3>
+                    <p style="color:var(--text-muted);font-size:.92rem;">Scan the array. The contender becomes champion
+                        if they beat the current record.</p>
+                    <p style="font-size:.85rem;margin-top:.5rem;">→ Full interactive simulation available on <a
+                            href="Day3_Page1_Syllabus.html#minmax" style="color:var(--primary);font-weight:600;">Page 1:
+                            Syllabus</a></p>
+                </div>
+
+                <!-- 3. Two-Pointer -->
+                <div class="card">
+                    <h3>3. ↔️ The Meet-Up (Two-Pointer)</h3>
+                    <p style="color:var(--text-muted);font-size:.92rem;">Starting at both ends and swapping toward the
+                        center until pointers meet.</p>
+                    <p style="font-size:.85rem;margin-top:.5rem;">→ Full interactive simulation on <a
+                            href="Day3_Page1_Syllabus.html#twopointer"
+                            style="color:var(--primary);font-weight:600;">Page 1: Syllabus</a></p>
+                </div>
+
+                <!-- 4. Kadane -->
+                <div class="card">
+                    <h3>4. 🌊 Sliding Max (Kadane's)</h3>
+                    <p style="color:var(--text-muted);font-size:.92rem;">A window that either grows or restarts based on
+                        the running sum.</p>
+                    <p style="font-size:.85rem;margin-top:.5rem;">→ Full interactive simulation on <a
+                            href="Day3_Page1_Syllabus.html#kadane" style="color:var(--primary);font-weight:600;">Page 1:
+                            Syllabus</a></p>
+                </div>
+            </div>
+
+            <!-- RIGHT: Practicum -->
+            <div style="flex:1;min-width:320px;">
+                <h2 style="margin-bottom:1rem;">💻 Practicum</h2>
+
+                <!-- For-loop array traversal -->
+                <div class="card" style="border-left:5px solid var(--secondary);">
+                    <h4>🔹 Iterating with for Loop</h4>
+                    <div class="algo-grid">
+                        <div class="viz-area">
+                            <div class="mem-row" id="iter-viz">
+                                <div class="mem-unit" id="iv-0"><span class="idx-label">[0]</span>85<span
+                                        class="addr-label">4096</span></div>
+                                <div class="mem-unit" id="iv-1"><span class="idx-label">[1]</span>92<span
+                                        class="addr-label">4100</span></div>
+                                <div class="mem-unit" id="iv-2"><span class="idx-label">[2]</span>78<span
+                                        class="addr-label">4104</span></div>
+                                <div class="mem-unit" id="iv-3"><span class="idx-label">[3]</span>96<span
+                                        class="addr-label">4108</span></div>
+                                <div class="mem-unit" id="iv-4"><span class="idx-label">[4]</span>88<span
+                                        class="addr-label">4112</span></div>
+                            </div>
+                            <div id="iter-st"
+                                style="margin-top:.8rem;font-weight:700;color:var(--primary);font-size:.9rem;">→ Ready
+                            </div>
+                            <div style="display:flex;gap:8px;margin-top:.8rem;">
+                                <button class="btn-sim" onclick="runIterate()" id="btn-iter">▶ Run Loop</button>
+                                <button class="btn-reset" onclick="resetIterate()">↺</button>
+                            </div>
+                        </div>
+                        <div class="code-container" id="code-iter">
+                            <span class="code-line" id="it-l1">int[] marks = {85,92,78,96,88};</span>
+                            <span class="code-line" id="it-l2">for (int i=0; i&lt;marks.length; i++){</span>
+                            <span class="code-line" id="it-l3"> System.out.println(marks[i]);</span>
+                            <span class="code-line" id="it-l4">}</span>
+                            <span class="code-line" id="it-l5">// Output: 85 92 78 96 88</span>
+                        </div>
+                    </div>
+                    <a href="https://pythontutor.com/java.html#code=public%20class%20Main%7Bpublic%20static%20void%20main(String[]%20args)%7Bint[]%20m%3D%7B85%2C92%2C78%2C96%2C88%7D%3Bfor(int%20i%3D0%3Bi%3Cm.length%3Bi%2B%2B)System.out.println(m%5Bi%5D)%3B%7D%7D"
+                        target="_blank" class="try-btn">🚀 Try It Yourself</a>
+                </div>
+
+                <!-- Kadane's -->
+                <div class="card" style="border-left:5px solid var(--secondary);">
+                    <h4>🔹 Kadane's Finder</h4>
+                    <pre>public class MainClass {
+  public static void main(String[] args) {
+    int[] a = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+    int cur=0, mx=a[0];
+    for(int v:a){
+        cur=Math.max(v, cur+v);
+        mx=Math.max(mx,cur);
+    }
+    System.out.println(mx); // → 6
+  }
+}</pre>
+                    <a href="https://pythontutor.com/java.html#code=public%20class%20MainClass%20%7B%0A%20%20public%20static%20void%20main(String[]%20args)%20%7B%0A%20%20%20%20int[]%20a%20%3D%20%7B-2%2C%201%2C%20-3%2C%204%2C%20-1%2C%202%2C%201%2C%20-5%2C%204%7D%3B%0A%20%20%20%20int%20cur%3D0%2C%20mx%3Da%5B0%5D%3B%20%0A%20%20%20%20for(int%20v%3Aa)%7B%20%0A%20%20%20%20%20%20%20%20cur%3DMath.max(v%2C%20cur%2Bv)%3B%20%0A%20%20%20%20%20%20%20%20mx%3DMath.max(mx%2Ccur)%3B%20%0A%20%20%20%20%7D%0A%20%20%20%20System.out.println(mx)%3B%0A%20%20%7D%0A%7D"
+                        target="_blank" class="try-btn">🚀 Try It</a>
+                </div>
+
+                <!-- Quick Reference -->
+                <div class="card">
+                    <h4>📋 Array Quick Reference</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Operation</th>
+                                <th>Syntax</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Declare</td>
+                                <td><code>int[] a = new int[5];</code></td>
+                                <td>O(n)</td>
+                            </tr>
+                            <tr>
+                                <td>Access</td>
+                                <td><code>a[i]</code></td>
+                                <td><b>O(1)</b></td>
+                            </tr>
+                            <tr>
+                                <td>Update</td>
+                                <td><code>a[i] = 10;</code></td>
+                                <td><b>O(1)</b></td>
+                            </tr>
+                            <tr>
+                                <td>Length</td>
+                                <td><code>a.length</code></td>
+                                <td>O(1)</td>
+                            </tr>
+                            <tr>
+                                <td>Iterate</td>
+                                <td><code>for(int x:a)</code></td>
+                                <td>O(n)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function hl(id, ms = 600) { const e = document.getElementById(id); if (!e) return; e.classList.add('active'); await new Promise(r => setTimeout(r, ms)); e.classList.remove('active'); }
+
+        const vals = [85, 92, 78, 96, 88];
+
+        // Single access
+        async function accessArray() {
+            const idx = parseInt(document.getElementById('acc-idx').value);
+            if (isNaN(idx) || idx < 0 || idx > 4) { document.getElementById('acc-result').innerText = '❌ Index out of bounds!'; return; }
+            const cells = document.querySelectorAll('#arr-viz .mem-unit');
+            cells.forEach(c => c.classList.remove('active'));
+            document.getElementById('idx-val').innerText = idx;
+            document.getElementById('out-val').innerText = vals[idx];
+            await hl('ac-l1');
+            await hl('ac-l2');
+            await hl('ac-l3');
+            cells[idx].classList.add('active');
+            await hl('ac-l4');
+            document.getElementById('acc-result').innerText = `✅ marks[${idx}] = ${vals[idx]}`;
+            await hl('ac-l5');
+            await hl('ac-l6');
+        }
+        function resetArray() {
+            document.querySelectorAll('#arr-viz .mem-unit').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('#code-acc .code-line').forEach(c => c.classList.remove('active'));
+            document.getElementById('acc-result').innerText = '→ Click Access to read an element';
+        }
+
+        // Iteration loop
+        async function runIterate() {
+            const b = document.getElementById('btn-iter'); b.disabled = true;
+            const st = document.getElementById('iter-st');
+            const cells = document.querySelectorAll('#iter-viz .mem-unit');
+            cells.forEach(c => c.classList.remove('active'));
+            await hl('it-l1');
+            for (let i = 0; i < vals.length; i++) {
+                await hl('it-l2');
+                cells.forEach(c => c.classList.remove('active'));
+                cells[i].classList.add('active');
+                st.innerText = `i=${i} → marks[${i}] = ${vals[i]}`;
+                await hl('it-l3');
+            }
+            await hl('it-l4');
+            await hl('it-l5');
+            st.innerText = '✅ All 5 elements printed!';
+            b.disabled = false;
+        }
+        function resetIterate() {
+            document.querySelectorAll('#iter-viz .mem-unit').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('#code-iter .code-line').forEach(c => c.classList.remove('active'));
+            document.getElementById('iter-st').innerText = '→ Ready';
+            document.getElementById('btn-iter').disabled = false;
+        }
+    </script>
+</body>
+
+</html>
