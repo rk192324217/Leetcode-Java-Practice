@@ -20,3 +20,4 @@ class Solution {
         return new int[]{ans1,ans2};
     }
 }
+// revised on 10.04.2026
