@@ -21,6 +21,5 @@ class Solution {
             substr.append(s.charAt(i));
         }
         return substr.toString(); 
-        
     }
 }
